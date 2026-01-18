@@ -23,7 +23,7 @@ public class GameEngine
         createRooms();
     }
 
-    public void setGUI(UserInterface userInterface)
+    public void setGUI(final UserInterface userInterface)
     {
         gui = userInterface;
         printWelcome();
@@ -79,7 +79,7 @@ public class GameEngine
      * Si cette commande met fin au jeu, true est retourné, sinon false est
      * retourné.
      */
-    public void interpretCommand(String commandLine)
+    public void interpretCommand(final String commandLine)
     {
         gui.println(commandLine);
         Command command = parser.getCommand(commandLine);
@@ -120,7 +120,7 @@ public class GameEngine
      * Essaie d'aller dans une direction. S'il y a une sortie, entre dans la nouvelle
      * pièce, sinon affiche un message d'erreur.
      */
-    private void goRoom(Command command)
+    private void goRoom(final Command command)
     {
         if(!command.hasSecondWord()) {
             // s'il n'y a pas de second mot, nous ne savons pas où aller...
@@ -138,6 +138,7 @@ public class GameEngine
         else {
             currentRoom = nextRoom;
             gui.println(currentRoom.getLongDescription());
+            gui.doorSound();
             if(currentRoom.getImageName() != null)
                 gui.showImage(currentRoom.getImageName());
         }

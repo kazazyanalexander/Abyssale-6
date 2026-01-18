@@ -1,4 +1,3 @@
-
 /** 
  * Cette classe est la classe principale de l'application "Station Abyssale-6".
  * "Station Abyssale-6" est un jeu d'aventure très simple, basé sur du texte. 
@@ -26,4 +25,3 @@ public class Game
         engine.setGUI(gui);
     }
 }
-

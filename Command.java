@@ -23,7 +23,7 @@ class Command
      * l'un ou l'autre (ou les deux) peuvent être nuls. Le mot de commande doit être null pour
      * indiquer qu'il s'agit d'une commande non reconnue par ce jeu.
      */
-    public Command(String firstWord, String secondWord)
+    public Command(final String firstWord,final String secondWord)
     {
         commandWord = firstWord;
         this.secondWord = secondWord;

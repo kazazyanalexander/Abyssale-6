@@ -25,7 +25,7 @@ public class Room
      * Initialement, elle n'a pas de sorties. "description" est quelque chose comme 
      * "dans une cuisine" ou "dans une cour ouverte".
      */
-    public Room(String description, String image) 
+    public Room(final String description,final String image) 
     {
         this.description = description;
         exits = new HashMap();
@@ -35,7 +35,7 @@ public class Room
     /**
      * Définit une sortie de cette pièce.
      */
-    public void setExit(String direction, Room neighbor) 
+    public void setExit(final String direction,final Room neighbor) 
     {
         exits.put(direction, neighbor);
     }
@@ -76,7 +76,7 @@ public class Room
      * Retourne la pièce atteinte si nous allons de cette pièce dans la direction
      * "direction". S'il n'y a pas de pièce dans cette direction, retourne null.
      */
-    public Room getExit(String direction) 
+    public Room getExit(final String direction) 
     {
         return (Room)exits.get(direction);
     }

@@ -1,4 +1,4 @@
-/**
+/**
  * Cette classe est la classe principale de l'application "Station Abyssale-6".
  * "Station Abyssale-6" est un jeu d'aventure très simple, basé sur du texte.
  * Cette classe contient une énumération de tous les mots de commande connus du jeu.
@@ -27,7 +27,7 @@ public class CommandWords
      * Vérifie si une chaîne de caractères donnée est un mot de commande valide. 
      * Retourne true si c'est le cas, false sinon.
      **/
-    public boolean isCommand(String aString)
+    public boolean isCommand(final String aString)
     {
         for(int i = 0; i < validCommands.length; i++) {
             if(validCommands[i].equals(aString))

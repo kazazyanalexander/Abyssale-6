@@ -18,13 +18,14 @@ public class UserInterface implements ActionListener
     private JTextField entryField;
     private JTextArea log;
     private JLabel image;
+    private MusicPlayer music;
 
     /**
      * Construit une UserInterface. Un moteur de jeu (un objet traitant et exécutant les commandes du jeu) est
      * nécessaire en paramètre.
      * @param gameEngine L'objet GameEngine implémentant la logique du jeu.
      */
-    public UserInterface(GameEngine gameEngine)
+    public UserInterface(final GameEngine gameEngine)
     {
         engine = gameEngine;
         createGUI();
@@ -33,7 +34,7 @@ public class UserInterface implements ActionListener
     /**
      * Affiche du texte dans la zone de texte.
      */
-    public void print(String text)
+    public void print(final String text)
     {
         log.append(text);
         log.setCaretPosition(log.getDocument().getLength());
@@ -42,7 +43,7 @@ public class UserInterface implements ActionListener
     /**
      * Affiche du texte dans la zone de texte, suivi d'un saut de ligne.
      */
-    public void println(String text)
+    public void println(final String text)
     {
         log.append(text + "\n");
         log.setCaretPosition(log.getDocument().getLength());
@@ -51,9 +52,9 @@ public class UserInterface implements ActionListener
     /**
      * Affiche un fichier image dans l'interface.
      */
-    public void showImage(String imageName)
+    public void showImage(final String imageName)
     {
-        URL imageURL = this.getClass().getClassLoader().getResource(imageName);
+        URL imageURL = this.getClass().getClassLoader().getResource("images/" + imageName);
         if(imageURL == null)
             System.out.println("image non trouvée");
         else {
@@ -66,7 +67,7 @@ public class UserInterface implements ActionListener
     /**
      * Active ou désactive la saisie dans le champ de saisie.
      */
-    public void enable(boolean on)
+    public void enable(final boolean on)
     {
         entryField.setEditable(on);
         if(!on)
@@ -78,7 +79,7 @@ public class UserInterface implements ActionListener
      */
     private void createGUI()
     {
-        myFrame = new JFrame("Zork");
+        myFrame = new JFrame("Abyssale-6");
         entryField = new JTextField(34);
 
         log = new JTextArea();
@@ -109,12 +110,19 @@ public class UserInterface implements ActionListener
         myFrame.pack();
         myFrame.setVisible(true);
         entryField.requestFocus();
+
+        this.music = new MusicPlayer();
+        this.music.playBackgroundMusic("audio/theme.wav");
+    }
+
+    public void doorSound(){
+        this.music.playSFX("audio/door.wav");
     }
 
     /**
      * Interface ActionListener pour le champ de texte de saisie.
      */
-    public void actionPerformed(ActionEvent e)
+    public void actionPerformed(final ActionEvent e)
     {
         // pas besoin de vérifier le type d'action pour le moment.
         // il n'y a qu'une seule action possible : la saisie de texte

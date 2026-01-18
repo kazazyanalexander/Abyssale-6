@@ -1,30 +1,18 @@
 import java.util.StringTokenizer;
 
 /**
-
-Cette classe fait partie de "Station Abyssale-6". "Station Abyssale-6" est un simple
-
-jeu d'aventure basé sur du texte.
-
-Cet analyseur syntaxique prend l'entrée utilisateur et essaie de l'interpréter comme une commande "Zuul".
-
-Chaque fois qu'il est appelé, il prend une ligne sous forme de chaîne de caractères et
-
-essaie d'interpréter la ligne comme une commande à deux mots. Il retourne la commande
-
-sous forme d'un objet de la classe Command.
-
-L'analyseur syntaxique possède un ensemble de mots de commande connus. Il vérifie l'entrée utilisateur par rapport
-
-aux commandes connues, et si l'entrée n'est pas l'une des commandes connues, il
-
-retourne un objet commande marqué comme commande inconnue.
-
-@author Michael Kolling et David J. Barnes
-
-@version 2.0 (Jan 2003)
-
-@modified by Alexander KAZAZYAN
+ * Cette classe fait partie de "Station Abyssale-6". "Station Abyssale-6" est un simple
+ * jeu d'aventure basé sur du texte.
+ * Cet analyseur syntaxique prend l'entrée utilisateur et essaie de l'interpréter comme une commande "Zuul".
+ * Chaque fois qu'il est appelé, il prend une ligne sous forme de chaîne de caractères et
+ * essaie d'interpréter la ligne comme une commande à deux mots. Il retourne la commande
+ * sous forme d'un objet de la classe Command.
+ * L'analyseur syntaxique possède un ensemble de mots de commande connus. Il vérifie l'entrée utilisateur par rapport
+ * aux commandes connues, et si l'entrée n'est pas l'une des commandes connues, il
+ * retourne un objet commande marqué comme commande inconnue.
+ * @author Michael Kolling et David J. Barnes
+ * @version 2.0 (Jan 2003)
+ * @modified by Alexander KAZAZYAN
  */
 
 public class Parser
@@ -43,7 +31,7 @@ public class Parser
      * Obtient une nouvelle commande de l'utilisateur. La commande est lue en
      * analysant la 'inputLine'.
      */
-    public Command getCommand(String inputLine) 
+    public Command getCommand(final String inputLine) 
     {
         //String inputLine = "";   // contiendra la ligne d'entrée complète
         String word1;
