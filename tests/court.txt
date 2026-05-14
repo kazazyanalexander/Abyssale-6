@@ -1,0 +1,18 @@
+# TEST COURT
+# ============================================
+# DÉPART : SAS (Sas d'entrée sécurisé)
+# ============================================
+
+# Vérifie que la pièce actuelle est bien le SAS
+roomis room_sas
+
+# Force la destination du téléporteur vers la salle du réacteur (mode test)
+alea room_reacteur
+
+# Se déplacer vers la salle de téléportation
+go up
+
+go up
+
+# Vérifie que l'on a bien atteint la salle du réacteur
+roomis room_reacteur

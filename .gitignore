@@ -1,5 +1,7 @@
 *.class
 *.ctxt
 *.DS_Store
-doc
-tmp
+
+bin
+*.defs
+.vscode
