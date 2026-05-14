@@ -1,0 +1,702 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Station Abyssale‑6 · jeu d’aventure textuel</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <!-- Font & style -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Fira Code pour monospaced élégant -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- External Stylesheet -->
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Babylon.js Core & Extensions -->
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+    <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-KJHP294SKG"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-KJHP294SKG");
+    </script>
+  </head>
+
+  <body>
+    <div class="project-container">
+      <!-- TITRE PRINCIPAL -->
+      <h1>⏦ Station Abyssale‑6 ⏦</h1>
+      <!-- SOUS-TITRE avec description immersive -->
+      <div class="project-sub">
+        ⚡ PROJET : JEU D'AVENTURE TEXTUEL ENVIRONNEMENTAL ⚡
+      </div>
+      <p
+        style="
+          font-size: 1.25rem;
+          font-weight: 400;
+          margin-bottom: 1.8rem;
+          background: #0a1c26;
+          padding: 1.2rem 1.8rem;
+          border-radius: 28px;
+          border-left: 12px solid #15b7b7;
+        "
+      >
+        <strong>Station Abyssale-6</strong> est un jeu d'aventure immersif qui
+        combine une interface graphique Java avec une narration textuelle.<br />
+        Le joueur incarne un survivant dans une station de recherche sous-marine
+        en perdition à 1000 mètres de profondeur. Objectif : rétablir le courant
+        avant que l'oxygène ne s'épuise (timer 10 minutes). Échangez avec les
+        PNJ, collectez des objets, résolvez le puzzle du réacteur et utilisez le
+        Beamer pour vous téléporter !
+      </p>
+
+      <!-- SECTION CAPTURE ÉCRAN -->
+      <h2>⚙️ Capture écran</h2>
+      <div class="gif-grid">
+        <div class="gif-card">
+          <img src="images/sas.gif" alt="Gameplay SAS" loading="lazy" />
+          <div class="fig-text">⬤ SAS d'entrée ⬤</div>
+        </div>
+        <div class="gif-card">
+          <img
+            src="images/win.gif"
+            alt="Victoire oxygène rétabli"
+            loading="lazy"
+          />
+          <div class="fig-text">⬤ condition de victoire ⬤</div>
+        </div>
+      </div>
+
+      <!-- 3D STATION MAP -->
+      <h2>🗺️ Carte 3D de la Station</h2>
+      <div class="station-3d-wrapper">
+        <canvas id="renderCanvas"></canvas>
+        <div id="overlay"></div>
+        <div id="hint">🔍 molette zoom avant / arrière</div>
+      </div>
+
+      <!-- PERSONNAGES (PNJ) GALLERY - MIS À JOUR AVEC LES DONNÉES JAVA -->
+      <div class="character-gallery">
+        <div class="gallery-title">👥 PERSONNAGES DE LA STATION (PNJ)</div>
+        <div class="carousel-container">
+          <button class="carousel-btn prev" id="prevBtn">&#8249;</button>
+          <div class="carousel-track" id="carouselTrack"></div>
+          <button class="carousel-btn next" id="nextBtn">&#8250;</button>
+        </div>
+        <div class="carousel-indicators" id="indicators"></div>
+        <p class="small-note" style="text-align: center; margin-top: 0.5rem">
+          ◆ Échanges & aides ◆ Personnages fixes ou mobiles (suivent le joueur /
+          chemin prédéfini)
+        </p>
+      </div>
+
+      <!-- ITEMS GALLERY - BASÉ SUR L'ÉNUMÉRATION ItemType -->
+      <div class="item-gallery">
+        <div class="gallery-title">📦 ITEMS DE LA STATION</div>
+        <div class="carousel-container" id="itemCarouselContainer">
+          <button class="carousel-btn prev" id="itemPrevBtn">&#8249;</button>
+          <div class="carousel-track" id="itemCarouselTrack"></div>
+          <button class="carousel-btn next" id="itemNextBtn">&#8250;</button>
+        </div>
+        <div class="carousel-indicators" id="itemIndicators"></div>
+        <p class="small-note" style="text-align: center">
+          ⚡ Poids, utilisabilité, système d'échange et Craft (téléporteur,
+          cookie magique, combinaison...)
+        </p>
+      </div>
+
+      <!-- NOUVEAU: MÉCANIQUES AVANCÉES (inspirées du code) -->
+      <h2>🌀 MÉCANIQUES SPÉCIALES</h2>
+      <div class="mechanics-grid">
+        <div class="mech-card">
+          <h4>📡 Beamer (téléporteur)</h4>
+          <p>
+            Chargez le Beamer dans une pièce (<span class="cmd-badge"
+              >charge</span
+            >), puis utilisez <span class="cmd-badge">fire</span> pour y
+            retourner instantanément – indispensable pour l’exploration.
+          </p>
+        </div>
+        <div class="mech-card">
+          <h4>🍪 Magic Cookie</h4>
+          <p>
+            Augmente définitivement la capacité de portage de +13 kg. Obtenu via
+            échange avec le docteur (contre bouteille d'oxygène).
+          </p>
+        </div>
+        <div class="mech-card">
+          <h4>🔋 Torche & Easter Egg</h4>
+          <p>
+            Dans l'Observatoire, utilisez la torche (<span class="cmd-badge"
+              >use torche</span
+            >) avec batterie >15% pour révéler un secret animé.
+          </p>
+        </div>
+        <div class="mech-card">
+          <h4>🌀 Transporter Room</h4>
+          <p>
+            Pièce spéciale qui téléporte aléatoirement. Commande
+            <span class="cmd-badge">alea [roomKey]</span> (mode test) pour
+            forcer la destination.
+          </p>
+        </div>
+        <div class="mech-card">
+          <h4>🧩 Puzzle du réacteur</h4>
+          <p>
+            Atteignez la salle du réacteur pour activer le puzzle électrique (8
+            interrupteurs, voltmètre). Bonne résolution = Victoire !
+          </p>
+        </div>
+        <div class="mech-card">
+          <h4>💾 Sauvegarde XML</h4>
+          <p>
+            <span class="cmd-badge">save nom</span> /
+            <span class="cmd-badge">load nom</span> : tout l'état (pièces,
+            inventaire, PNJ mobiles, portes verrouillées) est sauvegardé.
+          </p>
+        </div>
+      </div>
+
+      <!-- OBJECTIFS / VERSION / AUTEURS -->
+      <div class="info-panel">
+        <h2 style="margin-top: 0; border-left-color: #56d4d4">
+          🧾 OBJECTIF & INNOVATIONS
+        </h2>
+        <p style="font-size: 1.2rem">
+          Créer une expérience immersive mêlant aventure textuelle, graphismes
+          dynamiques, PNJ échangeurs, système de poids, puzzles et
+          téléportation.
+        </p>
+        <div
+          style="
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+            justify-content: space-around;
+          "
+        >
+          <span
+            style="
+              background: #10323d;
+              padding: 0.8rem 2rem;
+              border-radius: 50px;
+            "
+            >🧭 Exploration libre (13 salles)</span
+          >
+          <span
+            style="
+              background: #10323d;
+              padding: 0.8rem 2rem;
+              border-radius: 50px;
+            "
+            >🔎 Énigmes / échanges d'objets</span
+          >
+          <span
+            style="
+              background: #10323d;
+              padding: 0.8rem 2rem;
+              border-radius: 50px;
+            "
+            >🤖 Mobiles (MovingCharacter)</span
+          >
+        </div>
+        <hr style="margin: 2rem 0 1.2rem" />
+        <div
+          style="
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: space-between;
+          "
+        >
+          <div>
+            <span style="font-weight: 700; color: #a6ecf0">VERSION</span
+            ><br /><span
+              style="
+                font-size: 2rem;
+                font-weight: 700;
+                background: #0d282f;
+                padding: 0.2rem 1.2rem;
+                border-radius: 60px;
+                border: 1px solid cyan;
+              "
+              >3.0.21</span
+            ><span style="margin-left: 0.8rem">Mai 2026</span>
+          </div>
+          <div>
+            <span style="font-weight: 700; color: #a6ecf0">AUTEUR</span
+            ><br /><span
+              style="
+                font-size: 1.8rem;
+                font-weight: 600;
+                background: linear-gradient(145deg, #acf0ff, #7ad4e0);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+              "
+              >Alexander KAZAZYAN</span
+            ><span style="display: block"
+              >Développeur principal & game design</span
+            >
+          </div>
+        </div>
+        <div style="margin-top: 2rem; text-align: center">
+          <a
+            href="https://git.esiee.fr/kazazyaa/abyssale-6"
+            target="_blank"
+            class="gitlab-link"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              style="vertical-align: middle"
+            >
+              <path
+                d="M22.65 14.39L12 22.13L1.35 14.39C0.95 14.1 0.75 13.58 0.85 13.08L1.65 9.25L3.45 2.58C3.55 2.15 3.95 1.85 4.39 1.85C4.83 1.85 5.23 2.15 5.33 2.58L7.13 9.25H16.87L18.67 2.58C18.77 2.15 19.17 1.85 19.61 1.85C20.05 1.85 20.45 2.15 20.55 2.58L22.35 9.25L23.15 13.08C23.25 13.58 23.05 14.1 22.65 14.39Z"
+                fill="#E24329"
+              />
+              <path
+                d="M12 22.13L1.35 14.39C0.95 14.1 0.75 13.58 0.85 13.08L1.65 9.25H22.35L23.15 13.08C23.25 13.58 23.05 14.1 22.65 14.39L12 22.13Z"
+                fill="#FC6D26"
+              />
+              <path d="M12 22.13L16.87 9.25H7.13L12 22.13Z" fill="#FCA326" />
+              <path
+                d="M7.13 9.25L5.33 2.58C5.23 2.15 4.83 1.85 4.39 1.85C3.95 1.85 3.55 2.15 3.45 2.58L1.65 9.25H7.13Z"
+                fill="#E24329"
+              />
+              <path
+                d="M22.35 9.25L20.55 2.58C20.45 2.15 20.05 1.85 19.61 1.85C19.17 1.85 18.77 2.15 18.67 2.58L16.87 9.25H22.35Z"
+                fill="#E24329"
+              />
+            </svg>
+            <span>Dépôt GitLab · abyssale-6</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- STRUCTURE DU PROJET (mise à jour packages) -->
+      <h2>🏗️ STRUCTURE DU PROJET (Java)</h2>
+      <h3>Packages principaux</h3>
+      <div class="grid-2c">
+        <div class="class-card">
+          <h4>🎮 pkg_core</h4>
+          <p>
+            GameEngine, GameGUI, Parser – cœur du jeu, gestion des commandes,
+            timer, transitions.
+          </p>
+        </div>
+        <div class="class-card">
+          <h4>🗺️ pkg_gameplay</h4>
+          <p>
+            Room, Door, TransporterRoom – gestion des salles, portes
+            verrouillées, téléportation aléatoire.
+          </p>
+        </div>
+        <div class="class-card">
+          <h4>👥 pkg_characters</h4>
+          <p>
+            Player, Character, MovingCharacter – inventaire, poids, déplacement
+            (aléatoire, chemin, suivi joueur).
+          </p>
+        </div>
+        <div class="class-card">
+          <h4>📦 pkg_items</h4>
+          <p>
+            Item, Beamer, MagicCookie, DivingSuit, Torch – chaque objet a un
+            type, poids, image, utilisabilité.
+          </p>
+        </div>
+        <div class="class-card">
+          <h4>🖥️ pkg_ui_components</h4>
+          <p>
+            TransitionPanel, InventoryPopup, EasterEggDialog, PuzzlePage –
+            interface graphique interactive.
+          </p>
+        </div>
+        <div class="class-card">
+          <h4>⚙️ pkg_utility</h4>
+          <p>
+            Lang (i18n), MusicPlayer, GameSaverXML / GameLoaderXML –
+            internationalisation, sons, sauvegarde.
+          </p>
+        </div>
+      </div>
+
+      <!-- LISTE COMPLÈTE DES COMMANDES (issue du code) -->
+      <h2>⌨️ COMMANDES DISPONIBLES</h2>
+      <div
+        style="
+          background: #0b1c25;
+          border-radius: 32px;
+          padding: 1.5rem;
+          margin: 1rem 0;
+        "
+      >
+        <div
+          class="cmd-list"
+          style="display: flex; flex-wrap: wrap; gap: 0.6rem"
+        >
+          <span class="cmd-badge">go nord/sud/est/ouest/haut/bas</span>
+          <span class="cmd-badge">look</span>
+          <span class="cmd-badge">inventory</span>
+          <span class="cmd-badge">take &lt;objet&gt;</span>
+          <span class="cmd-badge">drop &lt;objet&gt;</span>
+          <span class="cmd-badge">eat &lt;cookie&gt;</span>
+          <span class="cmd-badge">back</span>
+          <span class="cmd-badge">use &lt;objet&gt;</span>
+          <span class="cmd-badge">charge</span>
+          <span class="cmd-badge">fire</span>
+          <span class="cmd-badge">talk [nom]</span>
+          <span class="cmd-badge">give &lt;objet&gt;</span>
+          <span class="cmd-badge">save &lt;fichier&gt;</span>
+          <span class="cmd-badge">load &lt;fichier&gt;</span>
+          <span class="cmd-badge">lang fr/en/de/zh</span>
+          <span class="cmd-badge">test &lt;script&gt;</span>
+          <span class="cmd-badge">alea [room]</span>
+          <span class="cmd-badge">help</span>
+          <span class="cmd-badge">quit</span>
+        </div>
+        <p class="small-note" style="margin-top: 1rem">
+          ✨ Les PNJ réagissent aux objets donnés (échanges) et fournissent des
+          indices. Le beamer se charge dans une pièce et permet de s'y
+          téléporter instantanément.
+        </p>
+      </div>
+
+      <!-- CANVA ARCHITECTURE DIV (ajouté) -->
+      <h2>📐 MAQUETTE ARCHITECTURALE (CANVA)</h2>
+      <p style="margin-bottom: 0.5rem">
+        Diagramme des flux, mapping des salles et design narratif de la station.
+      </p>
+      <div
+        style="
+          position: relative;
+          width: 100%;
+          height: 0;
+          padding-top: 56.25%;
+          padding-bottom: 0;
+          box-shadow: 0 2px 8px 0 rgba(63, 69, 81, 0.16);
+          margin-top: 1.2em;
+          margin-bottom: 0.9em;
+          overflow: hidden;
+          border-radius: 28px;
+          background: #031016;
+        "
+      >
+        <iframe
+          loading="lazy"
+          style="
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            border: none;
+          "
+          src="https://www.canva.com/design/DAHIBh5Yxi8/vHSNxF5e2P49kETm0fSE2A/view?embed"
+          allowfullscreen="allowfullscreen"
+          allow="fullscreen"
+        ></iframe>
+      </div>
+      <div style="text-align: center; margin-bottom: 2rem">
+        <a
+          href="https://www.canva.com/design/DAHIBh5Yxi8/view"
+          target="_blank"
+          style="color: #8bdef0"
+          >🔗 Station Abyssale‑6 Architecture (ouvrir dans Canva) ↗</a
+        >
+      </div>
+      <!-- ========== YOUTUBE VIDEOS SECTION ========== -->
+      <div class="video-showcase">
+        <h2>🎬 EXPLORATION & ARCHITECTURE</h2>
+        <div class="video-grid">
+          <!-- VIDEO 1: Walkthrough -->
+          <div class="video-card">
+            <div class="video-title"><span>🎮</span> Gameplay Walkthrough</div>
+            <div class="video-wrapper">
+              <iframe
+                src="https://www.youtube.com/embed/-aYp47lQdzY"
+                title="Station Abyssale-6 Walkthrough"
+                allow="
+                  accelerometer;
+                  autoplay;
+                  clipboard-write;
+                  encrypted-media;
+                  gyroscope;
+                  picture-in-picture;
+                  web-share;
+                "
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              >
+              </iframe>
+            </div>
+            <div class="video-description">
+              🎯 Découvrez un aperçu complet du gameplay : exploration des
+              salles, interactions avec les PNJ, gestion de l'inventaire et
+              résolution du puzzle du réacteur.
+            </div>
+          </div>
+
+          <!-- VIDEO 2: Architecture Explanation -->
+          <div class="video-card">
+            <div class="video-title">
+              <span>🏗️</span> Architecture Technique
+            </div>
+            <div class="video-wrapper">
+              <iframe
+                src="https://www.youtube.com/embed/EW5w5vcPp_w"
+                title="Station Abyssale-6 Architecture"
+                allow="
+                  accelerometer;
+                  autoplay;
+                  clipboard-write;
+                  encrypted-media;
+                  gyroscope;
+                  picture-in-picture;
+                  web-share;
+                "
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              >
+              </iframe>
+            </div>
+            <div class="video-description">
+              💡 Plongez dans les coulisses du code : l'architecture MVC, la
+              gestion des sauvegardes XML, le système d'IA des PNJ et
+              l'implémentation des mécaniques avancées.
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ========== AUDIO BLOG (LES ROUAGES) ========== -->
+      <h2>🎙️ AUDIO BLOG – Les Rouages de la Station</h2>
+      <div
+        style="
+          background: linear-gradient(135deg, #0e232c 0%, #05161e 100%);
+          border-radius: 32px;
+          padding: 2rem;
+          margin: 1rem 0 2rem 0;
+          border: 1px solid #2fa0aa;
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        "
+      >
+        <div
+          style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: center"
+        >
+          <div style="flex: 2; min-width: 200px">
+            <h3 style="margin: 0 0 0.5rem 0; color: #a6ecf0">
+              🔊 Les rouages de l'abysse
+            </h3>
+            <p
+              style="margin-bottom: 1rem; font-size: 1.05rem; line-height: 1.4"
+            >
+              Un podcast‑éclair qui explore les coulisses du développement de
+              <strong>Station Abyssale‑6</strong>. Architecture logicielle,
+              choix narratifs, défis techniques et immersion sonore. Écoutez les
+              mécanismes cachés de la station.
+            </p>
+            <audio
+              controls
+              style="
+                width: 100%;
+                max-width: 500px;
+                border-radius: 40px;
+                background: #0a1a20;
+              "
+            >
+              <source
+                src="/~kazazyaa/audio/les_rouages.mp3"
+                type="audio/mpeg"
+              />
+              Votre navigateur ne supporte pas la balise audio.
+              <a href="/~kazazyaa/audio/les_rouages.mp3" download
+                >Téléchargez le fichier MP3</a
+              >.
+            </audio>
+            <p class="small-note" style="margin-top: 1rem">
+              🎧 Format MP3 – 128 kbps – durée ~ 21 min. <br />
+              💡 Cliquez sur lecture, réglez votre volume. Pas d'autoplay forcé
+              pour respecter votre navigation.
+            </p>
+          </div>
+          <div style="flex: 1; text-align: center">
+            <span
+              style="
+                font-size: 3rem;
+                background: #0d2b33;
+                padding: 0.8rem;
+                border-radius: 60px;
+              "
+              >🎙️</span
+            >
+            <div
+              style="
+                margin-top: 1rem;
+                font-family: &quot;Fira Code&quot;, monospace;
+                font-size: 0.85rem;
+                color: #7acbd6;
+              "
+            >
+              #AudioBlog #GameDev
+            </div>
+          </div>
+        </div>
+        <hr style="margin: 1.5rem 0 0.5rem; border-color: #2d7f88" />
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+          "
+        >
+          <span>📅 Épisode 1 – Mai 2026</span>
+          <span>✍️ Par Alexander KAZAZYAN</span>
+          <span>🔗 Licence libre – partage & écoute</span>
+        </div>
+      </div>
+
+      <!-- DESCRIPTION DES ÉCHANGES PNJ -->
+      <h2>🔄 SYSTÈME D'ÉCHANGE & QUÊTES</h2>
+      <div
+        style="
+          background: #0c1d25;
+          border-radius: 28px;
+          padding: 1.5rem;
+          margin-bottom: 1.8rem;
+        "
+      >
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+          "
+        >
+          <div>
+            <span class="feature-tag">🔬 Scientifique (Labo)</span><br />Beamer
+            ↔ Bouteille Oxygène
+          </div>
+          <div>
+            <span class="feature-tag">🩺 Docteur (Infirmerie)</span
+            ><br />Oxygène ↔ Magic Cookie
+          </div>
+          <div>
+            <span class="feature-tag">🛡️ Garde (Poste de garde)</span
+            ><br />Torche ↔ Carte bleue
+          </div>
+          <div>
+            <span class="feature-tag">⚙ Ingénieur (Serre)</span
+            ><br />Échantillon génétique ↔ Combinaison
+          </div>
+          <div>
+            <span class="feature-tag">💊 Infirmière (Infirmerie)</span
+            ><br />Carte bleue ↔ Trousse de soin
+          </div>
+          <div>
+            <span class="feature-tag">🧬 Génétiste (Hydroponics)</span
+            ><br />Trousse soin ↔ Carte rouge
+          </div>
+        </div>
+        <p class="small-note" style="margin-top: 1rem">
+          ✅ Donnez l'objet requis à un PNJ avec
+          <span class="cmd-badge">give &lt;objet&gt;</span> pour recevoir le
+          nouvel objet. Certains personnages se déplacent (MovingCharacter) et
+          peuvent suivre le joueur.
+        </p>
+      </div>
+
+      <!-- TÉLÉCHARGEMENT JAR & INSTRUCTIONS -->
+      <h2>📦 TÉLÉCHARGEMENT & PRÉREQUIS</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 1.5rem">
+        <div
+          style="
+            flex: 1;
+            background: radial-gradient(circle at 10% 20%, #0e2933, #07161e);
+            border-radius: 40px;
+            padding: 2rem;
+            border: 1px solid #36a8b0;
+          "
+        >
+          <h3 style="margin-top: 0">⬇️ JAR EXÉCUTABLE</h3>
+          <a href="./jar/game.jar" class="btn-download" download="game.jar"
+            >Télécharger Station Abyssale-6 (JAR)</a
+          >
+          <p class="small-note">
+            Java 21+ requis. Lancez
+            <span class="cmd-badge">java -jar game.jar</span>
+          </p>
+        </div>
+        <div
+          style="
+            flex: 1;
+            background: #0f262c;
+            border-radius: 40px;
+            padding: 2rem;
+            border: 1px solid #40a8b0;
+          "
+        >
+          <h3 style="margin-top: 0">🙏 REMERCIEMENTS</h3>
+          <p>
+            Je remercie tout d'abord le
+            <span style="font-weight: 700; color: #b0faff"
+              >Professeur Denis BUREAU</span
+            >
+            pour ses cours, son accompagnement et sa passion pour le
+            développement transmise tout au long de ce projet.
+          </p>
+        </div>
+      </div>
+
+      <!-- FOOTER CRÉDITS -->
+      <div class="footer-credits">
+        <div>
+          <span class="feature-tag">📖 Documentation Javadoc</span>
+          <a href="./doc/" style="color: #7ff0ff">doc/index.html</a>
+        </div>
+        <div>
+          <span style="font-weight: 700">📄 LICENCE</span><br />Projet éducatif
+          – libre pour l'apprentissage
+        </div>
+        <div style="text-align: right">
+          <span style="font-weight: 700">🏆 CRÉDITS</span><br />Alexander
+          KAZAZYAN · UI/UX, architecture, IAs, save/load XML<br />Inspirations :
+          classiques du textuel & SF
+        </div>
+      </div>
+      <div style="display: flex; justify-content: center; margin-top: 2rem">
+        <span
+          style="
+            background: #06202a;
+            border-radius: 60px;
+            padding: 0.5rem 2.2rem;
+            border: 1px solid #13bbc5;
+          "
+          >⏥ STATION ABYSSALE‑6 · version 3.0.21 · mai 2026 ⏥</span
+        >
+      </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="script.js"></script>
+  </body>
+</html>
