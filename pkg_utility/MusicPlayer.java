@@ -27,7 +27,7 @@ public class MusicPlayer {
      * Constructeur par défaut de la classe MusicPlayer.
      */
     public MusicPlayer() {
-        
+        // Constructeur par défaut
     }
 
     /**
@@ -40,39 +40,43 @@ public class MusicPlayer {
      */
     public void playBackgroundMusic(final String pMusicFile) {
         try {
-            
+            // Construction du chemin vers le fichier audio dans les ressources
             final URL vMusicUrl = getClass().getResource("/audio/" + pMusicFile);
 
-            
+            // Vérification que le fichier a été trouvé
             if (vMusicUrl == null) {
                 System.err.println("Fichier audio non trouvé : /audio/" + pMusicFile);
                 return;
             }
 
-            
+            // Chargement du flux audio depuis le fichier
             final AudioInputStream vAudioInput = AudioSystem.getAudioInputStream(vMusicUrl);
 
-            
+            // Création et ouverture du clip audio
             this.aClip = AudioSystem.getClip();
             this.aClip.open(vAudioInput);
 
-            
+            // Réglage du volume si le contrôle est supporté
+            // Le contrôle MASTER_GAIN permet d'ajuster le volume en décibels
             if (this.aClip.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
                 final FloatControl vGainControl = (FloatControl) this.aClip.getControl(FloatControl.Type.MASTER_GAIN);
 
-                
+                // Réduction du volume de 20 dB (valeur négative = volume plus bas)
+                // 0.0f = volume maximum, -80.0f = silence (environ)
                 vGainControl.setValue(-20.0f);
             }
 
-           
+            // Configuration de la lecture en boucle infinie
             this.aClip.loop(Clip.LOOP_CONTINUOUSLY);
 
-            
+            // Démarrage de la lecture
             this.aClip.start();
 
-            
+            // System.out.println("Musique de fond '" + pMusicFile + "' démarrée en
+            // boucle.");
+
         } catch (final Exception vE) {
-            
+            // Gestion des erreurs : fichier non trouvé, format non supporté, etc.
             System.err.println("Erreur lors de la lecture de la musique : " + vE.getMessage());
             vE.printStackTrace();
         }
