@@ -98,7 +98,7 @@ public class GameGUI extends JFrame {
     /** Commande pour charger une partie. */
     private static final String CMD_LOAD = "LOAD";
     /** URL de base pour les images de fond. */
-    private static final String REMOTE_IMAGE_BASE_URL = "https://perso.esiee.fr/~kazazyaa/images/";
+    private static final String REMOTE_IMAGE_BASE_URL = "https://kazazyanalexander.github.io/Abyssale-6/images/";
 
     /**
      * Map associant les commandes des boutons à leurs actions correspondantes,

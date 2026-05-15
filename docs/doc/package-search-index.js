@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"pkg_characters"},{"l":"pkg_command"},{"l":"pkg_core"},{"l":"pkg_exceptions"},{"l":"pkg_gameplay"},{"l":"pkg_items"},{"l":"pkg_ui_components"},{"l":"pkg_utility"}];updateSearchResults();
