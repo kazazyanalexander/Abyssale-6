@@ -48,8 +48,8 @@ Consultez la page officielle du jeu pour découvrir :
 ## 🖼️ Captures d’écran
 
 <div align="center">
-  <img src="doc/images/sas.gif" width="45%" alt="SAS d'entrée" />
-  <img src="doc/images/win.gif" width="45%" alt="Condition de victoire" />
+  <img src="docs/images/sas.gif" width="45%" alt="SAS d'entrée" />
+  <img src="docs/images/win.gif" width="45%" alt="Condition de victoire" />
 </div>
 
 ---
