@@ -9,6 +9,19 @@ Vous incarnez un survivant dans une station de recherche sous‑marine en perdit
 
 ---
 
+## 🌐 Page web du projet
+
+👉 **[https://kazazyanalexander.github.io/Abyssale-6/](https://kazazyanalexander.github.io/Abyssale-6/)**  
+
+Consultez la page officielle du jeu pour découvrir :
+- La carte 3D interactive de la station
+- Les galeries d'images des personnages et objets
+- Les vidéos de démonstration (gameplay + architecture)
+- L'audio blog expliquant les coulisses du développement
+- Le téléchargement du fichier JAR
+
+---
+
 ## ✨ Fonctionnalités
 
 - **Carte étendue** : 13 salles interconnectées avec sorties directionnelles (Nord, Sud, Est, Ouest, Haut, Bas).
