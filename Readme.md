@@ -136,15 +136,15 @@ java -jar game.jar
 
 | Image                                                                      | PNJ               | Localisation            | Échange / Rôle                                 |
 | -------------------------------------------------------------------------- | ----------------- | ----------------------- | ---------------------------------------------- |
-| <img src="characters/character_scientist.png" width="32" height="32">      | Scientifique      | Laboratoire             | Beamer ↔ Bouteille d’oxygène                   |
-| <img src="characters/character_doctor.png" width="32" height="32">         | Médecin           | Infirmerie              | Oxygène ↔ Cookie magique                       |
-| <img src="characters/character_guard.png" width="32" height="32">          | Garde             | Poste de garde          | Torche ↔ Carte bleue                           |
-| <img src="characters/character_engineer.png" width="32" height="32">       | Ingénieur         | Serre                   | Échantillon génétique ↔ Combinaison de plongée |
-| <img src="characters/character_nurse.png" width="32" height="32">          | Infirmière        | Infirmerie              | Carte bleue ↔ Trousse de secours               |
-| <img src="characters/character_geneticist.png" width="32" height="32">     | Génétiste         | Hydroponics             | Trousse de secours ↔ Carte rouge               |
-| <img src="characters/character_wandering_tech.png" width="32" height="32"> | Technicien errant | Mobile (aléatoire)      | Réagit à la clé anglaise                       |
-| <img src="characters/character_researcher.png" width="32" height="32">     | Chercheur         | Mobile (chemin fixe)    | Réagit à la clé anglaise                       |
-| <img src="characters/character_stalker.png" width="32" height="32">        | Stalker           | Mobile (suit le joueur) | Dialogue, ne donne rien (mais suit activement) |
+| <img src="characters/character_scientist.png" width="32" height="64">      | Scientifique      | Laboratoire             | Beamer ↔ Bouteille d’oxygène                   |
+| <img src="characters/character_doctor.png" width="32" height="64">         | Médecin           | Infirmerie              | Oxygène ↔ Cookie magique                       |
+| <img src="characters/character_guard.png" width="32" height="64">          | Garde             | Poste de garde          | Torche ↔ Carte bleue                           |
+| <img src="characters/character_engineer.png" width="32" height="64">       | Ingénieur         | Serre                   | Échantillon génétique ↔ Combinaison de plongée |
+| <img src="characters/character_nurse.png" width="32" height="64">          | Infirmière        | Infirmerie              | Carte bleue ↔ Trousse de secours               |
+| <img src="characters/character_geneticist.png" width="32" height="64">     | Génétiste         | Hydroponics             | Trousse de secours ↔ Carte rouge               |
+| <img src="characters/character_wandering_tech.png" width="32" height="64"> | Technicien errant | Mobile (aléatoire)      | Réagit à la clé anglaise                       |
+| <img src="characters/character_researcher.png" width="32" height="64">     | Chercheur         | Mobile (chemin fixe)    | Réagit à la clé anglaise                       |
+| <img src="characters/character_stalker.png" width="32" height="64">        | Stalker           | Mobile (suit le joueur) | Dialogue, ne donne rien (mais suit activement) |
 
 ---
 
