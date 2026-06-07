@@ -51,4 +51,25 @@ public class ImageUtils {
         return null;
     }
 
+    /**
+     * Redimensionne une image en conservant les proportions, basé sur la hauteur.
+     * 
+     * @param pIcon         L'icône à redimensionner
+     * @param pTargetHeight La hauteur souhaitée
+     * @return L'icône redimensionnée
+     */
+    public static ImageIcon scaleImageToHeight(final ImageIcon pIcon, final int pTargetHeight) {
+        if (pIcon == null)
+            return null;
+        int vOriginalWidth = pIcon.getIconWidth();
+        int vOriginalHeight = pIcon.getIconHeight();
+        if (vOriginalHeight <= 0)
+            return pIcon;
+        double vRatio = (double) pTargetHeight / vOriginalHeight;
+        int vTargetWidth = (int) (vOriginalWidth * vRatio);
+        Image vOriginalImage = pIcon.getImage();
+        Image vScaledImage = vOriginalImage.getScaledInstance(vTargetWidth, pTargetHeight, Image.SCALE_SMOOTH);
+        return new ImageIcon(vScaledImage);
+    }
+
 }

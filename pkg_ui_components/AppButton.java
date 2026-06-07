@@ -159,6 +159,16 @@ public class AppButton extends JButton {
         });
     }
 
+/**
+ * Modifie la couleur de fond du bouton pour tous les états (normal, survol, désactivé).
+ * Utile pour harmoniser rapidement la palette du bouton sans devoir spécifier chaque couleur individuellement
+ * 
+ * @param pColor La nouvelle couleur de fond à appliquer à tous les états du bouton
+ */
+    public void setBackgroundColor(final Color pColor) {
+        this.aFondNormal = pColor;
+        repaint();
+    }
     // ── Peinture ─────────────────────────────────────────────────────────────
 
     /**

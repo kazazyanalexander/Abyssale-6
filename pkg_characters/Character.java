@@ -69,6 +69,15 @@ public class Character extends Entity {
     }
 
     /**
+     * Retourne la clé du message de bienvenue du personnage.
+     * 
+     * @return La clé du message de bienvenue
+     */
+    public String getGreetingKey() {
+        return this.aGreetingKey;
+    }
+
+    /**
      * Ajoute une réponse spécifique pour un objet donné.
      * 
      * @param pItem        L'objet auquel réagir

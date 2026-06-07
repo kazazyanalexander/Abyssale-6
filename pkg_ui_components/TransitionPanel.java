@@ -1,6 +1,7 @@
 package pkg_ui_components;
 
 import pkg_core.GameEngine;
+import pkg_utility.ImageUtils;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -139,7 +140,7 @@ public class TransitionPanel extends JPanel {
      * @param pNameKey La clé du nom du personnage
      */
     public void addCharacterOverlay(final ImageIcon pIcon, final String pNameKey) {
-        ImageIcon vScaledIcon = scaleImageToHeight(pIcon, CHARACTER_HEIGHT);
+        ImageIcon vScaledIcon = ImageUtils.scaleImageToHeight(pIcon, CHARACTER_HEIGHT);
         CharacterOverlay vOverlay = new CharacterOverlay(vScaledIcon, pNameKey,
                 vScaledIcon.getIconWidth(), vScaledIcon.getIconHeight());
 
@@ -193,7 +194,7 @@ public class TransitionPanel extends JPanel {
      * @param pItemKey La clé de l'item
      */
     public void addRoomItemOverlay(final ImageIcon pIcon, final String pItemKey) {
-        ImageIcon vScaledIcon = scaleImage(pIcon, ITEM_SIZE, ITEM_SIZE);
+        ImageIcon vScaledIcon = ImageUtils.scaleImageToHeight(pIcon, ITEM_SIZE);
         ItemOverlay vOverlay = new ItemOverlay(vScaledIcon, pItemKey,
                 ItemOverlay.ItemOverlayType.ROOM_ITEM, ITEM_SIZE);
 
@@ -373,27 +374,6 @@ public class TransitionPanel extends JPanel {
             return null;
         Image vOriginalImage = pIcon.getImage();
         Image vScaledImage = vOriginalImage.getScaledInstance(pWidth, pHeight, Image.SCALE_SMOOTH);
-        return new ImageIcon(vScaledImage);
-    }
-
-    /**
-     * Redimensionne une image en conservant les proportions, basé sur la hauteur.
-     * 
-     * @param pIcon         L'icône à redimensionner
-     * @param pTargetHeight La hauteur souhaitée
-     * @return L'icône redimensionnée
-     */
-    private ImageIcon scaleImageToHeight(final ImageIcon pIcon, final int pTargetHeight) {
-        if (pIcon == null)
-            return null;
-        int vOriginalWidth = pIcon.getIconWidth();
-        int vOriginalHeight = pIcon.getIconHeight();
-        if (vOriginalHeight <= 0)
-            return pIcon;
-        double vRatio = (double) pTargetHeight / vOriginalHeight;
-        int vTargetWidth = (int) (vOriginalWidth * vRatio);
-        Image vOriginalImage = pIcon.getImage();
-        Image vScaledImage = vOriginalImage.getScaledInstance(vTargetWidth, pTargetHeight, Image.SCALE_SMOOTH);
         return new ImageIcon(vScaledImage);
     }
 

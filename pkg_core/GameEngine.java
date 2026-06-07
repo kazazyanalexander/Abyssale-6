@@ -16,6 +16,7 @@ import pkg_items.Item;
 import pkg_utility.Direction;
 import pkg_utility.Lang;
 import pkg_utility.MusicPlayer;
+import pkg_utility.SapiTTS;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -177,6 +178,16 @@ public class GameEngine {
         this.log(Lang.localizableString("welcome"));
         this.printLocationInfo();
         this.showImage(this.aPlayer.getCurrentRoom().getImageName());
+
+          // Utiliser un Timer Swing pour retarder la parole
+        Timer timer = new Timer(100, e -> {
+            // Exécuter la parole dans un thread séparé pour ne pas bloquer l'interface
+            new Thread(() -> {
+                SapiTTS.speak(Lang.localizableString("welcome"), true);
+            }).start();
+        });
+        timer.setRepeats(false); // S'assurer qu'il ne s'exécute qu'une seule fois
+        timer.start();
     }
 
     /**

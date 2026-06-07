@@ -4,13 +4,14 @@ import pkg_core.GameEngine;
 import pkg_gameplay.Room;
 import pkg_characters.Character;
 import pkg_characters.Player;
+import pkg_ui_components.NPCChatDialog;
 import pkg_utility.Lang;
 
 /**
- * TalkCommand - Commande pour parler aux personnages.
- * 
+ * TalkCommand - Commande pour parler aux personnages via dialogue IA.
+ *
  * @author Alexander KAZAZYAN
- * @version 04/2026
+ * @version 05/2026
  */
 public class TalkCommand extends Command {
     /**
@@ -37,24 +38,45 @@ public class TalkCommand extends Command {
             return false;
         }
 
-        if (!hasSecondWord()) {
-            // Parler à tous → utiliser la popup
-            pGameEngine.showTalkPopup();
+        String secondWord = getSecondWord();
+
+        if (secondWord == null) {
+            // Aucun nom spécifié -> afficher la popup de sélection des personnages
+            if (pGameEngine.getGui() == null) {
+                // Mode headless : afficher la liste dans la console
+                pGameEngine.log(Lang.localizableString("talk_to_whom") + ":");
+                for (Character c : vCurrentRoom.getCharacters()) {
+                    pGameEngine.log("  - " + Lang.localizableString(c.getName()));
+                }
+                return false;
+            }
+            pGameEngine.showTalkPopup(); // Ouvre CharacterInteractionPopup en mode TALK
             return false;
         }
 
-        // Parler à un personnage spécifique
-        String vCharName = getSecondWord();
-        Character vChar = vCurrentRoom.getCharacter(vCharName);
-
-        if (vChar == null) {
-            pGameEngine.log(String.format(
-                    Lang.localizableString("character_not_found"),
-                    vCharName));
+        // Un nom a été fourni -> ouvrir directement le chat avec ce personnage
+        Character vCharacter = vCurrentRoom.getCharacter(secondWord);
+        if (vCharacter == null) {
+            pGameEngine.log(String.format(Lang.localizableString("character_not_found"), secondWord));
             return false;
         }
 
-        pGameEngine.log(vChar.speak());
+        openChatDialog(pGameEngine, vCharacter);
         return false;
+    }
+
+    /**
+     * Ouvre la boîte de dialogue de chat pour le personnage spécifié.
+     * 
+     * @param pGameEngine Le moteur de jeu
+     * @param pCharacter  Le personnage avec lequel parler
+     * 
+     */
+    private void openChatDialog(GameEngine pGameEngine, Character pCharacter) {
+        if (pGameEngine.getGui() == null) {
+            pGameEngine.log(Lang.localizableString("chat_only_graphical"));
+            return;
+        }
+        new NPCChatDialog(pGameEngine.getGui(), pCharacter);
     }
 }

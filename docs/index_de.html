@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Abyssal Station‑6 · Textadventure · Mehrsprachig & KI</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <!-- Font & style -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Babylon.js Core & Extensions -->
+    <script src="https://cdn.babylonjs.com/babylon.js"></script>
+    <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.min.js"></script>
+    <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-KJHP294SKG"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-KJHP294SKG");
+    </script>
+    
+    <!-- Language Switcher Script -->
+    <script>
+      function switchLanguage(lang) {
+        if (lang === 'fr') {
+          window.location.href = 'index.html';
+        }
+        if (lang === 'en') {
+          window.location.href = 'index_en.html';
+        }
+        if (lang === 'de') {
+          window.location.href = 'index_de.html';
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <div class="project-container">
+      <!-- Language Switcher Bar -->
+      <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-bottom: 1rem; padding: 0.5rem;">
+        <button onclick="switchLanguage('fr')" style="background: #2c5a6e; color: white; border: none; padding: 0.5rem 1.2rem; border-radius: 25px; cursor: pointer; font-weight: 600;">🇫🇷 Français</button>
+        <button onclick="switchLanguage('en')" style="background: #2c5a6e; color: white; border: none; padding: 0.5rem 1.2rem; border-radius: 25px; cursor: pointer; font-weight: 600;">🇬🇧 English</button>
+        <button onclick="switchLanguage('de')" style="background: #15b7b7; color: white; border: none; padding: 0.5rem 1.2rem; border-radius: 25px; cursor: pointer; font-weight: 600;">🇩🇪 Deutsch</button>
+      </div>
+    
+      <!-- MAIN TITLE -->
+      <h1>⏦ Abyssal Station‑6 ⏦</h1>
+      <div class="project-sub">
+        ⚡ PROJEKT: MEHRSPRACHIGES TEXTADVENTURE MIT KÜNSTLICHER INTELLIGENZ ⚡
+      </div>
+      
+      <!-- Multilingual badges -->
+      <div style="display: flex; gap: 0.8rem; justify-content: center; margin-bottom: 1.5rem; flex-wrap: wrap;">
+        <span class="badge">🌍 Deutsch</span>
+        <span class="badge">🌍 English</span>
+        <span class="badge">🌍 Français</span>
+        <span class="badge">🌍 中文</span>
+        <span class="badge">🤖 Lokaler LLM</span>
+        <span class="badge">🎤 Mehrsprachige TTS</span>
+      </div>
+
+      <p
+        style="
+          font-size: 1.25rem;
+          font-weight: 400;
+          margin-bottom: 1.8rem;
+          background: #0a1c26;
+          padding: 1.2rem 1.8rem;
+          border-radius: 28px;
+          border-left: 12px solid #15b7b7;
+        "
+      >
+        <strong>Abyssal Station-6</strong> ist ein immersives Abenteuerspiel, das
+        eine grafische Java-Oberfläche mit textbasierter Erzählung kombiniert.<br />
+        Sie spielen einen Überlebenden in einer havarierten Unterwasserforschungsstation
+        in 1.000 Metern Tiefe. Ziel: Stellen Sie die Stromversorgung wieder her, bevor
+        der Sauerstoff zur Neige geht (10-Minuten-Timer). Tauschen Sie mit NPCs,
+        sammeln Sie Gegenstände, lösen Sie das Reaktor-Rätsel und benutzen Sie den
+        Beamer zum Teleportieren!<br /><br />
+        <strong>🌟 NEUE FUNKTIONEN:</strong> Vollständige Mehrsprachigkeit (🇫🇷 🇬🇧 🇩🇪 🇨🇳),
+        adaptive Sprachsynthese, KI-generierte NPC-Dialoge (lokales LLM).
+      </p>
+
+      <!-- SCREENSHOT SECTION -->
+      <h2>⚙️ Bildschirmfoto</h2>
+      <div class="gif-grid">
+        <div class="gif-card">
+          <img src="images/sas.gif" alt="Gameplay SAS" loading="lazy" />
+          <div class="fig-text">⬤ Eingangsschleuse ⬤</div>
+        </div>
+        <div class="gif-card">
+          <img
+            src="images/win.gif"
+            alt="Sieg - Sauerstoff wiederhergestellt"
+            loading="lazy"
+          />
+          <div class="fig-text">⬤ Siegbedingung ⬤</div>
+        </div>
+      </div>
+
+      <!-- 3D STATION MAP -->
+      <h2>🗺️ 3D-Karte der Station</h2>
+      <div class="station-3d-wrapper">
+        <canvas id="renderCanvas"></canvas>
+        <div id="overlay"></div>
+        <div id="hint">🔍 Mausrad zum Zoomen</div>
+      </div>
+
+      <!-- MULTILINGUAL & AI SUPPORT -->
+      <h2>🌍 VOLLSTÄNDIGE MEHRSPRACHIGKEIT</h2>
+      <div class="mechanics-grid">
+        <div class="mech-card">
+          <h4>🗣️ Text-to-Speech (TTS)</h4>
+          <p>
+            <strong>4 unterstützte Sprachen:</strong> Deutsch, Englisch, Französisch, Chinesisch.<br />
+            Stimmen werden automatisch basierend auf der Spielsprache ausgewählt:<br />
+            🇩🇪 Stefan/Hedda · 🇬🇧 David/Zira · 🇫🇷 Paul/Hortense · 🇨🇳 Kangkang/Huihui<br />
+            <span class="small-note">✅ UTF-8 Unterstützung · ✅ Intelligente Fallback-Funktion</span>
+          </p>
+        </div>
+        <div class="mech-card">
+          <h4>🧠 Lokaler LLM (LangGraph)</h4>
+          <p>
+            Dynamische Dialoge generiert von <strong>maitre-granite-3.2-2b-instruct</strong><br />
+            • Separate Agenten pro Sprache (unabhängiger Speicher)<br />
+            • Kontextuelle und kohärente Antworten<br />
+            • FastAPI + LangChain Integration<br />
+            <span class="small-note">✅ 4 Agenten pro NPC (1 pro Sprache)</span>
+          </p>
+        </div>
+        <div class="mech-card">
+          <h4>🎮 Dynamischer Wechsel</h4>
+          <p>
+            Befehl <span class="cmd-badge">lang de/en/fr/zh</span><br />
+            • Oberfläche sofort übersetzt<br />
+            • LLM-Dialoge in neuer Sprache<br />
+            • TTS wechselt automatisch<br />
+            • Einstellung wird gespeichert
+          </p>
+        </div>
+        <div class="mech-card">
+          <h4>📦 i18n-Architektur</h4>
+          <p>
+            Externe Resource Bundles:<br />
+            <code>messages_de_DE.properties</code><br />
+            <code>messages_en_US.properties</code><br />
+            <code>messages_fr_FR.properties</code><br />
+            <code>messages_zh_CN.properties</code>
+          </p>
+        </div>
+      </div>
+
+      <!-- LLM & TTS CONFIGURATION -->
+      <h2>🤖 KI & SPRACHSYSTEM KONFIGURATION</h2>
+      <div style="background: #0b1c25; border-radius: 32px; padding: 1.5rem; margin: 1rem 0;">
+        <h3 style="margin-top: 0;">📡 Lokaler LLM-Server (FastAPI + LangGraph)</h3>
+        <div class="grid-2c" style="margin-bottom: 1.5rem;">
+          <div>
+            <strong>Voraussetzungen:</strong>
+            <ul style="margin: 0.5rem 0;">
+              <li>LM Studio (localhost:1234)</li>
+              <li>Python 3.8+</li>
+              <li>pip install langgraph langchain_openai fastapi uvicorn</li>
+            </ul>
+          </div>
+          <div>
+            <strong>Server starten:</strong>
+            <pre style="background: #05161e; padding: 0.8rem; border-radius: 16px; overflow-x: auto;">
+python npc_server.py
+# Server läuft auf http://localhost:8000</pre>
+          </div>
+        </div>
+        
+        <h3>🎤 Installation der TTS-Stimmen nach Sprache</h3>
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; background: #0a1a20; border-radius: 16px;">
+            <thead>
+              <tr><th style="padding: 0.8rem; text-align: left;">Sprache</th><th>Weibliche Stimme</th><th>Männliche Stimme</th><th>Benötigtes Windows-Paket</th></tr>
+            </thead>
+            <tbody>
+              <tr><td style="padding: 0.6rem;">🇩🇪 Deutsch</td><td>Microsoft Hedda Desktop</td><td>Microsoft Stefan Desktop</td><td>Deutsch (Deutschland)</td></tr>
+              <tr><td style="padding: 0.6rem;">🇬🇧 English</td><td>Microsoft Zira Desktop</td><td>Microsoft David Desktop</td><td>English (US)</td></tr>
+              <tr><td style="padding: 0.6rem;">🇫🇷 Français</td><td>Microsoft Hortense</td><td>Microsoft Paul</td><td>Français (France)</td></tr>
+              <tr><td style="padding: 0.6rem;">🇨🇳 中文</td><td>Microsoft Huihui Desktop</td><td>Microsoft Kangkang Desktop</td><td>中文 (简体)</td></tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <h3 style="margin-top: 1.5rem;">🔧 Schnelle Fehlerbehebung</h3>
+        <div class="grid-2c" style="font-size: 0.9rem;">
+          <div>❌ <strong>Akzente falsch ausgesprochen</strong><br/>→ Auf neueste Version mit UTF-8-Unterstützung aktualisieren</div>
+          <div>❌ <strong>Deutsche Stimme fehlt</strong><br/>→ Deutsche Sprachpaket in Windows installieren</div>
+          <div>❌ <strong>NPC antwortet auf Englisch</strong><br/>→ "language"-Parameter in API-Anfrage prüfen</div>
+          <div>❌ <strong>LLM zu langsam</strong><br/>→ 1B-Modell verwenden oder Temperatur senken</div>
+        </div>
+      </div>
+
+      <!-- NPC CHARACTER GALLERY -->
+      <div class="character-gallery">
+        <div class="gallery-title">👥 STATIONSCHARAKTERE (NPCs)</div>
+        <div class="carousel-container">
+          <button class="carousel-btn prev" id="prevBtn">&#8249;</button>
+          <div class="carousel-track" id="carouselTrack"></div>
+          <button class="carousel-btn next" id="nextBtn">&#8250;</button>
+        </div>
+        <div class="carousel-indicators" id="indicators"></div>
+        <p class="small-note" style="text-align: center; margin-top: 0.5rem">
+          ◆ Handel & Hilfe ◆ Feste oder mobile Charaktere ◆ <strong>Mehrsprachige KI-Dialoge</strong>
+        </p>
+      </div>
+
+      <!-- ITEMS GALLERY -->
+      <div class="item-gallery">
+        <div class="gallery-title">📦 STATIONSGEGENSTÄNDE</div>
+        <div class="carousel-container" id="itemCarouselContainer">
+          <button class="carousel-btn prev" id="itemPrevBtn">&#8249;</button>
+          <div class="carousel-track" id="itemCarouselTrack"></div>
+          <button class="carousel-btn next" id="itemNextBtn">&#8250;</button>
+        </div>
+        <div class="carousel-indicators" id="itemIndicators"></div>
+        <p class="small-note" style="text-align: center">
+          ⚡ Gewicht, Verwendbarkeit, Handelssystem und Handwerk (Teleporter, magischer Keks, Tauchanzug...)
+        </p>
+      </div>
+
+      <!-- ADVANCED MECHANICS -->
+      <h2>🌀 SPEZIELLE MECHANIKEN</h2>
+      <div class="mechanics-grid">
+        <div class="mech-card">
+          <h4>📡 Beamer (Teleporter)</h4>
+          <p>
+            Laden Sie den Beamer in einem Raum (<span class="cmd-badge">charge</span>), dann verwenden Sie <span class="cmd-badge">fire</span> für sofortige Rückkehr.
+          </p>
+        </div>
+        <div class="mech-card">
+          <h4>🍪 Magischer Keks</h4>
+          <p>
+            Erhöht dauerhaft die Tragfähigkeit um +13 kg. Erhältlich durch Handel mit dem Arzt.
+          </p>
+        </div>
+        <div class="mech-card">
+          <h4>🔋 Taschenlampe & Easter Egg</h4>
+          <p>
+            Im Observatorium, benutzen Sie die Taschenlampe (<span class="cmd-badge">use taschenlampe</span>) mit Batterie >15%, um ein Geheimnis zu enthüllen.
+          </p>
+        </div>
+        <div class="mech-card">
+          <h4>🌀 Transporterraum</h4>
+          <p>
+            Spezieller Raum mit zufälliger Teleportation. Befehl <span class="cmd-badge">alea [raum]</span> (Testmodus).
+          </p>
+        </div>
+        <div class="mech-card">
+          <h4>🧩 Reaktor-Rätsel</h4>
+          <p>
+            Erreichen Sie den Reaktorraum, um das elektrische Rätsel zu aktivieren (8 Schalter, Voltmeter).
+          </p>
+        </div>
+        <div class="mech-card">
+          <h4>💾 XML-Speichersystem</h4>
+          <p>
+            <span class="cmd-badge">save name</span> / <span class="cmd-badge">load name</span>: Speichert den gesamten Zustand (Räume, Inventar, aktive Sprache).
+          </p>
+        </div>
+      </div>
+
+      <!-- OBJECTIVES / VERSION / AUTHOR -->
+      <div class="info-panel">
+        <h2 style="margin-top: 0; border-left-color: #56d4d4">
+          🧾 ZIEL & INNOVATIONEN
+        </h2>
+        <p style="font-size: 1.2rem">
+          Schaffung eines immersiven Erlebnisses, das Textadventure, dynamische Grafiken, handelnde NPCs, Gewichtssystem, Rätsel und Teleportation vereint.<br/>
+          <strong>Hauptinnovationen:</strong> 4-Sprachen-Unterstützung, lokale KI für Dialoge, adaptive TTS.
+        </p>
+        <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-around;">
+          <span style="background: #10323d; padding: 0.8rem 2rem; border-radius: 50px;">🌍 Mehrsprachig (DE/EN/FR/ZH)</span>
+          <span style="background: #10323d; padding: 0.8rem 2rem; border-radius: 50px;">🧠 Lokaler LLM (LangGraph)</span>
+          <span style="background: #10323d; padding: 0.8rem 2rem; border-radius: 50px;">🎤 4-Sprachen TTS</span>
+          <span style="background: #10323d; padding: 0.8rem 2rem; border-radius: 50px;">🤖 Mobile NPCs mit KI</span>
+        </div>
+        <hr style="margin: 2rem 0 1.2rem" />
+        <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: space-between;">
+          <div>
+            <span style="font-weight: 700; color: #a6ecf0">VERSION</span><br />
+            <span style="font-size: 2rem; font-weight: 700; background: #0d282f; padding: 0.2rem 1.2rem; border-radius: 60px; border: 1px solid cyan;">3.1.0</span>
+            <span style="margin-left: 0.8rem">Juni 2026</span>
+          </div>
+          <div>
+            <span style="font-weight: 700; color: #a6ecf0">AUTOR</span><br />
+            <span style="font-size: 1.8rem; font-weight: 600; background: linear-gradient(145deg, #acf0ff, #7ad4e0); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Alexander KAZAZYAN</span>
+            <span style="display: block">Hauptentwickler & Spieledesign</span>
+          </div>
+        </div>
+        <div style="margin-top: 2rem; text-align: center">
+        <a href="https://github.com/kazazyanalexander/Abyssale-6" target="_blank" class="github-link">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="vertical-align: middle">
+            <path
+              d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.26.82-.58 0-.287-.01-1.05-.015-2.06-3.338.726-4.042-1.61-4.042-1.61-.546-1.39-1.335-1.76-1.335-1.76-1.09-.746.082-.73.082-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.29-1.552 3.297-1.23 3.297-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.824 1.102.824 2.22 0 1.602-.015 2.894-.015 3.287 0 .322.216.698.83.578C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"
+              fill="#F5F5F5" />
+          </svg>
+            <span>GitHub-Repository · abyssale-6</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- PROJECT STRUCTURE -->
+      <h2>🏗️ PROJEKTSTRUKTUR (Java)</h2>
+      <h3>Hauptpakete</h3>
+      <div class="grid-2c">
+        <div class="class-card">
+          <h4>🎮 pkg_core</h4>
+          <p>GameEngine, GameGUI, Parser – Spielkern, Befehlsverarbeitung, Timer, Übergänge.</p>
+        </div>
+        <div class="class-card">
+          <h4>🗺️ pkg_gameplay</h4>
+          <p>Room, Door, TransporterRoom – Raumverwaltung, verschlossene Türen, zufällige Teleportation.</p>
+        </div>
+        <div class="class-card">
+          <h4>👥 pkg_characters</h4>
+          <p>Player, Character, MovingCharacter – Inventar, Gewicht, Bewegung, LLM-Dialoge.</p>
+        </div>
+        <div class="class-card">
+          <h4>📦 pkg_items</h4>
+          <p>Item, Beamer, MagicCookie, DivingSuit, Torch – Typen, Gewicht, Bilder, Verwendbarkeit.</p>
+        </div>
+        <div class="class-card">
+          <h4>🖥️ pkg_ui_components</h4>
+          <p>TransitionPanel, InventoryPopup, EasterEggDialog, PuzzlePage – interaktive Oberfläche.</p>
+        </div>
+        <div class="class-card">
+          <h4>⚙️ pkg_utility</h4>
+          <p><strong>Lang (i18n)</strong>, MusicPlayer, GameSaverXML, <strong>SapiTTS (mehrsprachig)</strong> – Internationalisierung, Sound, Speichern, Sprachsynthese.</p>
+        </div>
+      </div>
+
+      <!-- FULL COMMAND LIST -->
+      <h2>⌨️ VERFÜGBARE BEFEHLE</h2>
+      <div style="background: #0b1c25; border-radius: 32px; padding: 1.5rem; margin: 1rem 0;">
+        <div class="cmd-list" style="display: flex; flex-wrap: wrap; gap: 0.6rem">
+          <span class="cmd-badge">go norden/süden/osten/westen/oben/unten</span>
+          <span class="cmd-badge">look</span>
+          <span class="cmd-badge">inventory</span>
+          <span class="cmd-badge">take &lt;gegenstand&gt;</span>
+          <span class="cmd-badge">drop &lt;gegenstand&gt;</span>
+          <span class="cmd-badge">eat &lt;keks&gt;</span>
+          <span class="cmd-badge">back</span>
+          <span class="cmd-badge">use &lt;gegenstand&gt;</span>
+          <span class="cmd-badge">charge</span>
+          <span class="cmd-badge">fire</span>
+          <span class="cmd-badge">talk [name]</span>
+          <span class="cmd-badge">give &lt;gegenstand&gt;</span>
+          <span class="cmd-badge">save &lt;datei&gt;</span>
+          <span class="cmd-badge">load &lt;datei&gt;</span>
+          <span class="cmd-badge">lang de/en/fr/zh</span>
+          <span class="cmd-badge">test &lt;skript&gt;</span>
+          <span class="cmd-badge">alea [raum]</span>
+          <span class="cmd-badge">tts on/off</span>
+          <span class="cmd-badge">help</span>
+          <span class="cmd-badge">quit</span>
+        </div>
+        <p class="small-note" style="margin-top: 1rem">
+          ✨ NPCs reagieren auf gegebene Gegenstände (Handel) und liefern Hinweise via LLM.<br />
+          ✨ <span class="cmd-badge">lang</span> Befehl ändert sofort Oberfläche, KI-Dialoge und TTS-Stimme.
+        </p>
+      </div>
+
+      <!-- CANVA ARCHITECTURE -->
+      <h2>📐 ARCHITEKTURENTWURF (CANVA)</h2>
+      <p style="margin-bottom: 0.5rem">
+        Flussdiagramm, Raumkartierung und narratives Design der Station.
+      </p>
+      <div style="position: relative; width: 100%; height: 0; padding-top: 56.25%; padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63, 69, 81, 0.16); margin-top: 1.2em; margin-bottom: 0.9em; overflow: hidden; border-radius: 28px; background: #031016;">
+        <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none;" src="https://www.canva.com/design/DAHIBh5Yxi8/vHSNxF5e2P49kETm0fSE2A/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
+      </div>
+      <div style="text-align: center; margin-bottom: 2rem">
+        <a href="https://www.canva.com/design/DAHIBh5Yxi8/view" target="_blank" style="color: #8bdef0">🔗 Abyssal Station‑6 Architektur (in Canva öffnen) ↗</a>
+      </div>
+
+      <!-- YOUTUBE VIDEOS SECTION -->
+      <div class="video-showcase">
+        <h2>🎬 ERKUNDUNG & ARCHITEKTUR</h2>
+        <div class="video-grid">
+           <div class="video-card">
+          <div class="video-title"><span>🏗️</span> Hinter den Kulissen von Abyssal 6</div>
+          <div class="video-wrapper">
+            <iframe src="https://www.youtube.com/embed/Pe83sN-iQcA" title="Hinter den Kulissen von Abyssal 6"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+          <div class="video-description">
+            💡 Tauche ein in die Tiefen des Ozeans und entdecke die Funktionsweise von **Station Abyssal-6**, einem immersiven textbasierten Abenteuerspiel, das die Grenzen traditioneller Softwarearchitektur durch die Integration von KI-generativer Technologie erweitert.
+            100% locale.
+          </div>
+        </div>
+          <div class="video-card">
+            <div class="video-title"><span>🎮</span> Gameplay-Durchlauf</div>
+            <div class="video-wrapper">
+              <iframe src="https://www.youtube.com/embed/-aYp47lQdzY" title="Abyssal Station-6 Walkthrough" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <div class="video-description">
+              🎯 Komplette Gameplay-Übersicht: Erkundung, NPC-Interaktionen, Inventarverwaltung, Reaktor-Rätsel.
+            </div>
+          </div>
+          <div class="video-card">
+            <div class="video-title"><span>🏗️</span> Technische Architektur</div>
+            <div class="video-wrapper">
+              <iframe src="https://www.youtube.com/embed/EW5w5vcPp_w" title="Abyssal Station-6 Architecture" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <div class="video-description">
+              💡 Hinter den Kulissen: MVC-Architektur, XML-Speicherungen, NPC-KI, <strong>mehrsprachige Unterstützung und TTS</strong>.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AUDIO BLOG -->
+      <h2>🎙️ AUDIO-BLOG – Die Zahnräder der Station</h2>
+      <div style="background: linear-gradient(135deg, #0e232c 0%, #05161e 100%); border-radius: 32px; padding: 2rem; margin: 1rem 0 2rem 0; border: 1px solid #2fa0aa;">
+        <div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: center">
+          <div style="flex: 2; min-width: 200px">
+            <h3 style="margin: 0 0 0.5rem 0; color: #a6ecf0">🔊 Die Zahnräder der Tiefe</h3>
+            <p style="margin-bottom: 1rem; font-size: 1.05rem; line-height: 1.4">
+              Ein Kurz-Podcast, der die Entwicklung hinter <strong>Abyssal Station‑6</strong> erkundet: Softwarearchitektur, <strong>mehrsprachige Unterstützung (i18n)</strong>, LLM-Integration, SAPI-Sprachsynthese.
+            </p>
+            <audio controls style="width: 100%; max-width: 500px; border-radius: 40px; background: #0a1a20;">
+              <source src="/Abyssale-6/audio/les_rouages.mp3" type="audio/mpeg" />
+              Ihr Browser unterstützt das Audio-Element nicht.
+            </audio>
+            <p class="small-note" style="margin-top: 1rem">🎧 MP3 – 128 kbps – Dauer ~21 min. Spezielle mehrsprachige Episode.</p>
+          </div>
+          <div style="flex: 1; text-align: center">
+            <span style="font-size: 3rem; background: #0d2b33; padding: 0.8rem; border-radius: 60px;">🎙️</span>
+            <div style="margin-top: 1rem; font-family: 'Fira Code', monospace; font-size: 0.85rem; color: #7acbd6;">#AudioBlog #GameDev #Mehrsprachig</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRADING SYSTEM & QUESTS -->
+      <h2>🔄 HANDELSSYSTEM & QUESTS</h2>
+      <div style="background: #0c1d25; border-radius: 28px; padding: 1.5rem; margin-bottom: 1.8rem;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
+          <div><span class="feature-tag">🔬 Wissenschaftler (Labor)</span><br />Beamer ↔ Sauerstoffflasche</div>
+          <div><span class="feature-tag">🩺 Arzt (Krankenstation)</span><br />Sauerstoff ↔ Magischer Keks</div>
+          <div><span class="feature-tag">🛡️ Wache (Wachposten)</span><br />Taschenlampe ↔ Blaue Zugangskarte</div>
+          <div><span class="feature-tag">⚙ Ingenieur (Gewächshaus)</span><br />Genetische Probe ↔ Tauchanzug</div>
+          <div><span class="feature-tag">💊 Krankenschwester (Krankenstation)</span><br />Blaue Zugangskarte ↔ Verbandskasten</div>
+          <div><span class="feature-tag">🧬 Genetiker (Hydroponik)</span><br />Verbandskasten ↔ Rote Zugangskarte</div>
+        </div>
+        <p class="small-note" style="margin-top: 1rem">
+          ✅ Geben Sie den benötigten Gegenstand mit <span class="cmd-badge">give &lt;gegenstand&gt;</span> an den NPC. <strong>Handelsdialoge werden vom LLM in der aktuellen Sprache generiert.</strong>
+        </p>
+      </div>
+
+      <!-- DOWNLOAD & REQUIREMENTS -->
+      <h2>📦 DOWNLOAD & VORAUSSETZUNGEN</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 1.5rem">
+        <div style="flex: 1; background: radial-gradient(circle at 10% 20%, #0e2933, #07161e); border-radius: 40px; padding: 2rem; border: 1px solid #36a8b0;">
+          <h3 style="margin-top: 0">⬇️ AUSFÜHRBARE JAR</h3>
+          <a href="./jar/game.jar" class="btn-download" download="game.jar">Abyssal Station-6 herunterladen (JAR)</a>
+          <p class="small-note">Java 21+ erforderlich. Ausführen mit <span class="cmd-badge">java -jar game.jar</span></p>
+          <p class="small-note" style="margin-top: 0.5rem">🌍 Für vollständige mehrsprachige Unterstützung installieren Sie die gewünschten Windows-Sprachpakete.</p>
+        </div>
+        <div style="flex: 1; background: #0f262c; border-radius: 40px; padding: 2rem; border: 1px solid #40a8b0;">
+          <h3 style="margin-top: 0">🙏 DANKSAGUNGEN</h3>
+          <p>
+            Ich möchte besonders <span style="font-weight: 700; color: #b0faff">Professor Denis BUREAU</span>
+            für seine Kurse, seine Begleitung und seine Leidenschaft für die Entwicklung danken, die er während dieses Projekts vermittelt hat.
+          </p>
+          <p style="margin-top: 1rem">
+            <strong>Verwendete Technologien:</strong> Java 21, Python 3.8+, LangChain, LangGraph, FastAPI, LM Studio, SAPI 5 TTS.
+          </p>
+        </div>
+      </div>
+
+      <!-- FOOTER CREDITS -->
+      <div class="footer-credits">
+        <div>
+          <span class="feature-tag">📖 Javadoc-Dokumentation</span>
+          <a href="./doc/" style="color: #7ff0ff">doc/index.html</a>
+        </div>
+        <div>
+          <span style="font-weight: 700">📄 LIZENZ</span><br />Bildungsprojekt – frei für Lernzwecke
+        </div>
+        <div style="text-align: right">
+          <span style="font-weight: 700">🏆 CREDITS</span><br />Alexander KAZAZYAN · UI/UX, Architektur, KI, save/load XML<br />
+          <strong>Mehrsprachige & KI-Unterstützung</strong> : LangGraph, SAPI TTS, i18n
+        </div>
+      </div>
+      <div style="display: flex; justify-content: center; margin-top: 2rem">
+        <span style="background: #06202a; border-radius: 60px; padding: 0.5rem 2.2rem; border: 1px solid #13bbc5;">
+          ⏥ ABYSSAL STATION‑6 · version 3.1.0 · Mehrsprachig & KI · Juni 2026 ⏥
+        </span>
+      </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="script.js"></script>
+  </body>
+</html>
