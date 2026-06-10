@@ -644,3 +644,403 @@ a:hover {
   height: 100%;
   border: none;
 }
+/* --- EXTRACTED FROM HTML (inline styles converted to classes) --- */
+
+/* Language switcher bar */
+.lang-switcher {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+}
+.lang-btn {
+  color: white;
+  border: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.lang-btn--inactive {
+  background: #2c5a6e;
+}
+.lang-btn--active {
+  background: #15b7b7;
+}
+
+/* Badge row (multilingual feature badges) */
+.badge-row {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+.badge {
+  background: #10323d;
+  padding: 0.4rem 1.1rem;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  color: #b2f0f0;
+  border: 1px solid #2f8f9f;
+}
+
+/* Intro paragraph */
+.intro-paragraph {
+  font-size: 1.25rem;
+  font-weight: 400;
+  margin-bottom: 1.8rem;
+  background: #0a1c26;
+  padding: 1.2rem 1.8rem;
+  border-radius: 28px;
+  border-left: 12px solid #15b7b7;
+}
+
+/* Mechanics grid & cards */
+.mechanics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.2rem;
+  margin: 1rem 0;
+}
+.mech-card {
+  background: #0c1e26;
+  padding: 1.4rem 1.5rem;
+  border-radius: 20px;
+  border-top: 4px solid #15b7b7;
+  box-shadow: 0 6px 0 #0a121c;
+}
+.mech-card h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #b4f2ff;
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid #257a8a;
+}
+
+/* LLM/TTS config panel */
+.config-panel {
+  background: #0b1c25;
+  border-radius: 32px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+}
+.config-panel pre {
+  background: #05161e;
+  padding: 0.8rem;
+  border-radius: 16px;
+  overflow-x: auto;
+}
+.config-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #0a1a20;
+  border-radius: 16px;
+}
+.config-table th {
+  padding: 0.8rem;
+  text-align: left;
+}
+.config-table td {
+  padding: 0.6rem;
+}
+.config-table-wrap {
+  overflow-x: auto;
+}
+.troubleshoot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.8rem;
+  font-size: 0.9rem;
+}
+
+/* Gitlab link */
+.gitlab-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #0f2a33;
+  padding: 0.8rem 2rem;
+  border-radius: 40px;
+  border: 1px solid #3fc0d0;
+  color: #c2f5ff;
+  font-weight: 600;
+  margin: 1rem 0 0.5rem 0;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+.gitlab-link:hover {
+  background: #1a4450;
+  border-color: #7fffff;
+  box-shadow: 0 0 15px #00ccffaa;
+  transform: translateY(-2px);
+  color: white;
+  border-bottom: none;
+}
+
+/* Feature tag (trading system) */
+.feature-tag {
+  display: inline-block;
+  background: #0f2d38;
+  padding: 0.2rem 0.8rem;
+  border-radius: 30px;
+  border: 1px solid #2f8f9f;
+  color: #a6ecf0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+/* Objectives / innovations panel inner layout */
+.info-innovations {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-around;
+}
+.info-innovation-tag {
+  background: #10323d;
+  padding: 0.8rem 2rem;
+  border-radius: 50px;
+}
+.info-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-between;
+}
+.info-version {
+  font-size: 2rem;
+  font-weight: 700;
+  background: #0d282f;
+  padding: 0.2rem 1.2rem;
+  border-radius: 60px;
+  border: 1px solid cyan;
+}
+.info-version-label,
+.info-author-label {
+  font-weight: 700;
+  color: #a6ecf0;
+}
+.info-author-name {
+  font-size: 1.8rem;
+  font-weight: 600;
+  background: linear-gradient(145deg, #acf0ff, #7ad4e0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.info-gitlab-row {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+/* Download / acknowledgements section */
+.download-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+.download-card {
+  flex: 1;
+  background: radial-gradient(circle at 10% 20%, #0e2933, #07161e);
+  border-radius: 40px;
+  padding: 2rem;
+  border: 1px solid #36a8b0;
+}
+.ack-card {
+  flex: 1;
+  background: #0f262c;
+  border-radius: 40px;
+  padding: 2rem;
+  border: 1px solid #40a8b0;
+}
+.ack-name {
+  font-weight: 700;
+  color: #b0faff;
+}
+
+/* Trading grid */
+.trading-panel {
+  background: #0c1d25;
+  border-radius: 28px;
+  padding: 1.5rem;
+  margin-bottom: 1.8rem;
+}
+.trading-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+/* Canva embed */
+.canva-embed-wrap {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-top: 56.25%;
+  padding-bottom: 0;
+  box-shadow: 0 2px 8px 0 rgba(63, 69, 81, 0.16);
+  margin-top: 1.2em;
+  margin-bottom: 0.9em;
+  overflow: hidden;
+  border-radius: 28px;
+  background: #031016;
+}
+.canva-embed-wrap iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  border: none;
+}
+.canva-link-row {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Audio blog */
+.audio-blog {
+  background: linear-gradient(135deg, #0e232c 0%, #05161e 100%);
+  border-radius: 32px;
+  padding: 2rem;
+  margin: 1rem 0 2rem 0;
+  border: 1px solid #2fa0aa;
+}
+.audio-blog-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: center;
+}
+.audio-blog-text {
+  flex: 2;
+  min-width: 200px;
+}
+.audio-blog-text h3 {
+  margin: 0 0 0.5rem 0;
+  color: #a6ecf0;
+  display: block;
+  border: none;
+  padding: 0;
+}
+.audio-blog-text p {
+  margin-bottom: 1rem;
+  font-size: 1.05rem;
+  line-height: 1.4;
+}
+.audio-player {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 40px;
+  background: #0a1a20;
+}
+.audio-blog-side {
+  flex: 1;
+  text-align: center;
+}
+.audio-icon {
+  font-size: 3rem;
+  background: #0d2b33;
+  padding: 0.8rem;
+  border-radius: 60px;
+}
+.audio-tags {
+  margin-top: 1rem;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.85rem;
+  color: #7acbd6;
+}
+
+/* Footer version bar */
+.version-bar {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.version-bar span {
+  background: #06202a;
+  border-radius: 60px;
+  padding: 0.5rem 2.2rem;
+  border: 1px solid #13bbc5;
+}
+
+/* Requirements list inside config panel */
+.req-list {
+  margin: 0.5rem 0;
+  padding-left: 1.2rem;
+}
+
+/* Utility */
+.font-size-1-2 { font-size: 1.2rem; }
+
+/* --- 3D CHARACTER PEDESTAL SHOWCASE STYLES --- */
+#pedestalWrapper {
+  position: relative;
+}
+.pedestal-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  filter: brightness(0.85) contrast(1.05);
+  border-radius: 28px;
+}
+#pedestalCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  background: transparent;
+  z-index: 1;
+}
+#pedestalLoadingOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  z-index: 20;
+  transition: opacity 0.5s ease;
+  border-radius: 28px;
+}
+#pedestalLoadingOverlay p {
+  color: #b0f0ff;
+  font-size: 13px;
+  font-family: monospace;
+  letter-spacing: 1px;
+  margin: 0;
+  text-shadow: 0 0 4px #00e5ff80;
+}
+.pedestal-loading-sub {
+  font-size: 10px;
+  color: #5f9ea0;
+}
+.loading-progress {
+  width: 240px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  overflow: hidden;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 0 6px rgba(0, 229, 255, 0.2);
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00e5ff, #00c3ff, #40e0ff);
+  width: 0%;
+  transition: width 0.2s ease-out;
+  border-radius: 20px;
+  box-shadow: 0 0 6px #00e5ff;
+}

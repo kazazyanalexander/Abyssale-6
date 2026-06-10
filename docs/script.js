@@ -88,7 +88,7 @@ function initScene(index, fileName) {
       `camera-${index}`,
       Math.PI / 2,
       Math.PI / 3,
-      5,
+      6,
       BABYLON.Vector3.Zero(),
       scene,
     );
@@ -369,6 +369,224 @@ window.addEventListener("resize", () => {
   updateCarouselItem();
 });
 
+/* --- 3D CHARACTER PEDESTAL SHOWCASE SCRIPT --- */
+(function initPedestal() {
+  if (typeof BABYLON === "undefined" || typeof BABYLON.GUI === "undefined") {
+    setTimeout(initPedestal, 200);
+    return;
+  }
+  const canvas = document.getElementById("pedestalCanvas");
+  if (!canvas) return;
+
+  const CIRCLE_RADIUS = 2.2;
+  const PEDESTAL_H = 0.15;
+  const PEDESTAL_R = 0.35;
+  const ROTATION_SPEED = 0.09;
+
+  let rotationY = 0;
+  let pedestalRoot;
+  let isPedestalLoading = true;
+  let lastPedestalTime = performance.now();
+
+  const engine = new BABYLON.Engine(canvas, true, {
+    preserveDrawingBuffer: true,
+    alpha: true,
+  });
+  const scene = new BABYLON.Scene(engine);
+  scene.clearColor = new BABYLON.Color4(0, 0, 0, 0);
+
+  const camera = new BABYLON.ArcRotateCamera(
+    "pedCam", -Math.PI / 2.2, Math.PI / 1.2, 9.0,
+    BABYLON.Vector3.Zero(), scene
+  );
+  camera.lowerRadiusLimit = 5.2;
+  camera.upperRadiusLimit = 15;
+  camera.upperBetaLimit = Math.PI / 2.05;
+  camera.wheelPrecision = 35;
+  camera.attachControl(canvas, true);
+
+  const ambient = new BABYLON.HemisphericLight("pedAmb", new BABYLON.Vector3(0, 1, 0), scene);
+  ambient.intensity = 0.58;
+  ambient.diffuse = new BABYLON.Color3(0.85, 0.92, 1.0);
+
+  const keyLight = new BABYLON.DirectionalLight("pedKey", new BABYLON.Vector3(-1.2, -2.5, -1.2), scene);
+  keyLight.intensity = 1.15;
+  keyLight.diffuse = new BABYLON.Color3(1, 0.98, 0.95);
+
+  const fillLight = new BABYLON.PointLight("pedFill", new BABYLON.Vector3(0, 2.8, -2.8), scene);
+  fillLight.intensity = 0.55;
+  fillLight.diffuse = new BABYLON.Color3(0.75, 0.88, 1.0);
+
+  const rimLight = new BABYLON.PointLight("pedRim", new BABYLON.Vector3(0, 2.2, 3.4), scene);
+  rimLight.intensity = 0.68;
+  rimLight.diffuse = new BABYLON.Color3(1.0, 0.7, 0.45);
+
+  const fillBottom = new BABYLON.PointLight("pedBottom", new BABYLON.Vector3(0, -1.2, 0), scene);
+  fillBottom.intensity = 0.32;
+  fillBottom.diffuse = new BABYLON.Color3(0.4, 0.55, 0.7);
+
+  pedestalRoot = new BABYLON.TransformNode("pedRoot", scene);
+  pedestalRoot.position = new BABYLON.Vector3(0, -0.82, 0);
+
+  function createPedestal(pos) {
+    const parent = new BABYLON.TransformNode("ped_" + Math.random(), scene);
+    parent.parent = pedestalRoot;
+    parent.position = pos;
+
+    const baseMat = new BABYLON.StandardMaterial("baseMat_p", scene);
+    baseMat.diffuseColor = new BABYLON.Color3(0.22, 0.22, 0.24);
+    baseMat.specularColor = new BABYLON.Color3(0.55, 0.55, 0.6);
+    baseMat.specularPower = 72;
+
+    const baseCyl = BABYLON.MeshBuilder.CreateCylinder("baseCyl_p",
+      { height: PEDESTAL_H, diameter: PEDESTAL_R * 2, tessellation: 48 }, scene);
+    baseCyl.parent = parent;
+    baseCyl.material = baseMat;
+
+    const ringMat = new BABYLON.StandardMaterial("ringMat_p", scene);
+    ringMat.diffuseColor = new BABYLON.Color3(0, 0.92, 0.92);
+    ringMat.emissiveColor = new BABYLON.Color3(0, 0.55, 0.65);
+    ringMat.specularColor = new BABYLON.Color3(0.3, 0.9, 0.9);
+    ringMat.specularPower = 90;
+
+    const ringDisc = BABYLON.MeshBuilder.CreateCylinder("ringDisc_p",
+      { height: 0.045, diameter: (PEDESTAL_R - 0.05) * 2, tessellation: 56 }, scene);
+    ringDisc.parent = parent;
+    ringDisc.position.y = 0.0;
+    ringDisc.material = ringMat;
+
+    const topMat = new BABYLON.StandardMaterial("topMat_p", scene);
+    topMat.diffuseColor = new BABYLON.Color3(0.72, 0.72, 0.74);
+    topMat.specularColor = new BABYLON.Color3(0.98, 0.98, 1.0);
+    topMat.specularPower = 48;
+
+    const topDisc = BABYLON.MeshBuilder.CreateCylinder("topDisc_p",
+      { height: 0.032, diameter: (PEDESTAL_R + 0.055) * 2, tessellation: 56 }, scene);
+    topDisc.parent = parent;
+    topDisc.position.y = PEDESTAL_H / 2 + 0.012;
+    topDisc.material = topMat;
+
+    const edgeMat = new BABYLON.StandardMaterial("edgeMat_p", scene);
+    edgeMat.diffuseColor = new BABYLON.Color3(0, 0.85, 0.95);
+    edgeMat.emissiveColor = new BABYLON.Color3(0, 0.3, 0.4);
+
+    const microRing = BABYLON.MeshBuilder.CreateTorus("microRing_p",
+      { diameter: (PEDESTAL_R + 0.035) * 2, thickness: 0.012, tessellation: 64 }, scene);
+    microRing.parent = parent;
+    microRing.position.y = PEDESTAL_H / 2 + 0.025;
+    microRing.material = edgeMat;
+    microRing.visibility = 0.7;
+
+    return parent;
+  }
+
+  function createPedestalLabel(text, parent, yPos) {
+    const plane = BABYLON.MeshBuilder.CreatePlane("lbl_" + text, { width: 1.2, height: 0.24 }, scene);
+    plane.parent = parent;
+    plane.position.y = yPos;
+    plane.billboardMode = BABYLON.AbstractMesh.BILLBOARDMODE_Y;
+    const advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateForMesh(plane, 512, 128);
+    const textBlock = new BABYLON.GUI.TextBlock();
+    textBlock.text = text.toUpperCase();
+    textBlock.color = "#FFE484";
+    textBlock.fontSize = 36;
+    textBlock.fontFamily = "monospace";
+    textBlock.fontWeight = "bold";
+    textBlock.outlineColor = "#001122";
+    textBlock.outlineWidth = 6;
+    textBlock.shadowColor = "#00e5ff80";
+    textBlock.shadowOffsetX = 2;
+    textBlock.shadowOffsetY = 2;
+    advancedTexture.addControl(textBlock);
+  }
+
+  const pedestalCharacters = [
+    { file: "character_doctor.glb", label: "Doctor" },
+    { file: "character_guard.glb", label: "Guard" },
+    { file: "character_scientist.glb", label: "Scientist" },
+    { file: "character_engineer.glb", label: "Engineer" },
+    { file: "character_nurse.glb", label: "Nurse" },
+    { file: "character_stalker.glb", label: "Stalker" },
+    { file: "character_geneticist.glb", label: "Geneticist" },
+    { file: "character_researcher.glb", label: "Researcher" },
+    { file: "character_wandering_tech.glb", label: "Wandering Tech" },
+  ];
+
+  async function loadPedestalCharacters() {
+    const overlay = document.getElementById("pedestalLoadingOverlay");
+    const progressBar = document.getElementById("pedestalProgressBar");
+    const loadingText = document.getElementById("pedestalLoadingText");
+    const totalCount = pedestalCharacters.length;
+
+    for (let i = 0; i < totalCount; i++) {
+      const char = pedestalCharacters[i];
+      const angle = (i / totalCount) * 2 * Math.PI;
+      const px = CIRCLE_RADIUS * Math.cos(angle);
+      const pz = CIRCLE_RADIUS * Math.sin(angle);
+      const initialY = 0.68;
+      const pos = new BABYLON.Vector3(px, initialY, pz);
+
+      const pedestal = createPedestal(pos);
+      const outwardAngle = Math.atan2(px, pz) + Math.PI;
+
+      try {
+        const result = await BABYLON.SceneLoader.ImportMeshAsync("", "./characters/", char.file, scene);
+        const meshes = result.meshes;
+        const container = new BABYLON.TransformNode("charContainer_" + char.label, scene);
+        container.parent = pedestal;
+        container.position.y = PEDESTAL_H / 2 + 0.018;
+        container.rotation.y = outwardAngle;
+        const rootMesh = meshes.find((m) => m.name === "__root__") || meshes[0];
+        if (rootMesh) {
+          rootMesh.parent = container;
+          rootMesh.scaling = new BABYLON.Vector3(0.85, 0.85, 0.85);
+          scene.render();
+          const boundingBox = rootMesh.getHierarchyBoundingVectors();
+          const charMinY = boundingBox.min.y;
+          rootMesh.position.y = -charMinY;
+          const charHeight = boundingBox.max.y - charMinY;
+          pedestal.position.y = initialY - charHeight;
+          const labelYOffset = PEDESTAL_H / 2 + 0.018 + charHeight * 0.95 + 0.22;
+          createPedestalLabel(char.label, pedestal, labelYOffset);
+        }
+      } catch (err) {
+        console.warn("Failed to load " + char.file, err);
+        createPedestalLabel(char.label + " ⚡", pedestal, PEDESTAL_H / 2 + 1.22);
+      }
+
+      progressBar.style.width = ((i + 1) / totalCount) * 100 + "%";
+      loadingText.textContent = "Chargement des personnages... " + (i + 1) + "/" + totalCount;
+      await new Promise((r) => setTimeout(r, 55));
+    }
+
+    isPedestalLoading = false;
+    overlay.style.opacity = "0";
+    overlay.style.transition = "opacity 0.55s cubic-bezier(0.2, 0.9, 0.4, 1.0)";
+    setTimeout(() => { overlay.style.display = "none"; }, 600);
+  }
+
+  scene.onBeforeRenderObservable.add(() => {
+    if (isPedestalLoading) return;
+    const now = performance.now();
+    const dt = Math.min(0.033, (now - lastPedestalTime) / 1000);
+    lastPedestalTime = now;
+    rotationY -= dt * ROTATION_SPEED;
+    pedestalRoot.rotation.y = rotationY;
+  });
+
+  engine.runRenderLoop(() => scene.render());
+  window.addEventListener("resize", () => engine.resize());
+
+  canvas.addEventListener("wheel", (e) => e.preventDefault(), { passive: false });
+  canvas.addEventListener("touchmove", (e) => e.preventDefault(), { passive: false });
+
+  loadPedestalCharacters().catch((err) => {
+    console.error("Pedestal loading error", err);
+    const overlay = document.getElementById("pedestalLoadingOverlay");
+    if (overlay) overlay.innerHTML = '<div style="color:#ff6699;text-align:center;">⚠️ Erreur de chargement</div>';
+  });
+})();
+
 /* --- 3D STATION MAP SCRIPT (existing) --- */
 (function init3D() {
   if (typeof BABYLON === "undefined" || typeof BABYLON.GUI === "undefined") {
@@ -388,7 +606,7 @@ window.addEventListener("resize", () => {
     const camera = new BABYLON.ArcRotateCamera(
       "camera",
       BABYLON.Tools.ToRadians(180),
-      BABYLON.Tools.ToRadians(20),
+      BABYLON.Tools.ToRadians(80),
       1400,
       new BABYLON.Vector3(0, 200, 0),
       scene,
