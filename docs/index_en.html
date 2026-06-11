@@ -1,11 +1,14 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Abyssal Station‑6 · Text Adventure Game · Multilingual & AI</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
+    rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <script src="https://cdn.babylonjs.com/babylon.js"></script>
@@ -74,14 +77,10 @@
       </div>
     </div>
 
-        <!-- 3D CHARACTER PEDESTAL SHOWCASE -->
+    <!-- 3D CHARACTER PEDESTAL SHOWCASE -->
     <h2>🧬 3D Character Gallery</h2>
     <div class="station-3d-wrapper" id="pedestalWrapper">
-      <img
-        src="images/characters_back.png"
-        class="pedestal-bg-img"
-        alt="abyssal background"
-      />
+      <img src="images/characters_back.png" class="pedestal-bg-img" alt="abyssal background" />
       <canvas id="pedestalCanvas"></canvas>
       <div id="pedestalLoadingOverlay">
         <div class="loading-progress">
@@ -169,23 +168,48 @@
       <div class="config-table-wrap">
         <table class="config-table">
           <thead>
-            <tr><th>Language</th><th>Female Voice</th><th>Male Voice</th><th>Windows Pack Required</th></tr>
+            <tr>
+              <th>Language</th>
+              <th>Female Voice</th>
+              <th>Male Voice</th>
+              <th>Windows Pack Required</th>
+            </tr>
           </thead>
           <tbody>
-            <tr><td>🇬🇧 English</td><td>Microsoft Zira Desktop</td><td>Microsoft David Desktop</td><td>English (US)</td></tr>
-            <tr><td>🇫🇷 French</td><td>Microsoft Hortense</td><td>Microsoft Paul</td><td>French (France)</td></tr>
-            <tr><td>🇩🇪 German</td><td>Microsoft Hedda Desktop</td><td>Microsoft Stefan Desktop</td><td>German (Germany)</td></tr>
-            <tr><td>🇨🇳 Chinese</td><td>Microsoft Huihui Desktop</td><td>Microsoft Kangkang Desktop</td><td>Chinese (Simplified)</td></tr>
+            <tr>
+              <td>🇬🇧 English</td>
+              <td>Microsoft Zira Desktop</td>
+              <td>Microsoft David Desktop</td>
+              <td>English (US)</td>
+            </tr>
+            <tr>
+              <td>🇫🇷 French</td>
+              <td>Microsoft Hortense</td>
+              <td>Microsoft Paul</td>
+              <td>French (France)</td>
+            </tr>
+            <tr>
+              <td>🇩🇪 German</td>
+              <td>Microsoft Hedda Desktop</td>
+              <td>Microsoft Stefan Desktop</td>
+              <td>German (Germany)</td>
+            </tr>
+            <tr>
+              <td>🇨🇳 Chinese</td>
+              <td>Microsoft Huihui Desktop</td>
+              <td>Microsoft Kangkang Desktop</td>
+              <td>Chinese (Simplified)</td>
+            </tr>
           </tbody>
         </table>
       </div>
 
       <h3 style="margin-top: 1.5rem;">🔧 Quick Troubleshooting</h3>
       <div class="troubleshoot-grid">
-        <div>❌ <strong>Accents mispronounced</strong><br/>→ Update to latest UTF-8 supported version</div>
-        <div>❌ <strong>German voice missing</strong><br/>→ Install German language pack in Windows</div>
-        <div>❌ <strong>NPC replies in English</strong><br/>→ Check "language" parameter in API request</div>
-        <div>❌ <strong>LLM too slow</strong><br/>→ Use 1B model or lower temperature</div>
+        <div>❌ <strong>Accents mispronounced</strong><br />→ Update to latest UTF-8 supported version</div>
+        <div>❌ <strong>German voice missing</strong><br />→ Install German language pack in Windows</div>
+        <div>❌ <strong>NPC replies in English</strong><br />→ Check "language" parameter in API request</div>
+        <div>❌ <strong>LLM too slow</strong><br />→ Use 1B model or lower temperature</div>
       </div>
     </div>
 
@@ -222,7 +246,8 @@
     <div class="mechanics-grid">
       <div class="mech-card">
         <h4>📡 Beamer (Teleporter)</h4>
-        <p>Charge the Beamer in a room (<span class="cmd-badge">charge</span>), then use <span class="cmd-badge">fire</span> to instantly return.</p>
+        <p>Charge the Beamer in a room (<span class="cmd-badge">charge</span>), then use <span
+            class="cmd-badge">fire</span> to instantly return.</p>
       </div>
       <div class="mech-card">
         <h4>🍪 Magic Cookie</h4>
@@ -230,7 +255,8 @@
       </div>
       <div class="mech-card">
         <h4>🔋 Torch & Easter Egg</h4>
-        <p>In the Observatory, use the torch (<span class="cmd-badge">use torch</span>) with battery >15% to reveal a secret.</p>
+        <p>In the Observatory, use the torch (<span class="cmd-badge">use torch</span>) with battery >15% to reveal a
+          secret.</p>
       </div>
       <div class="mech-card">
         <h4>🌀 Transporter Room</h4>
@@ -242,7 +268,8 @@
       </div>
       <div class="mech-card">
         <h4>💾 XML Save System</h4>
-        <p><span class="cmd-badge">save name</span> / <span class="cmd-badge">load name</span>: saves entire state (rooms, inventory, active language).</p>
+        <p><span class="cmd-badge">save name</span> / <span class="cmd-badge">load name</span>: saves entire state
+          (rooms, inventory, active language).</p>
       </div>
     </div>
 
@@ -250,7 +277,8 @@
     <div class="info-panel">
       <h2 style="margin-top: 0; border-left-color: #56d4d4">🧾 OBJECTIVE & INNOVATIONS</h2>
       <p class="font-size-1-2">
-        Create an immersive experience combining text adventure, dynamic graphics, trading NPCs, weight system, puzzles, and teleportation.<br/>
+        Create an immersive experience combining text adventure, dynamic graphics, trading NPCs, weight system, puzzles,
+        and teleportation.<br />
         <strong>Key innovations:</strong> 4-language support, local AI for dialogues, adaptive TTS.
       </p>
       <div class="info-innovations">
@@ -273,13 +301,13 @@
         </div>
       </div>
       <div class="info-gitlab-row">
-          <a href="https://github.com/kazazyanalexander/Abyssale-6" target="_blank" class="github-link"></a>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="vertical-align: middle">
-            <path
-              d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.26.82-.58 0-.287-.01-1.05-.015-2.06-3.338.726-4.042-1.61-4.042-1.61-.546-1.39-1.335-1.76-1.335-1.76-1.09-.746.082-.73.082-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.29-1.552 3.297-1.23 3.297-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.824 1.102.824 2.22 0 1.602-.015 2.894-.015 3.287 0 .322.216.698.83.578C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"
-              fill="#F5F5F5" />
-          </svg>
-          <span>GitHub Repository · abyssale-6</span>
+        <a href="https://github.com/kazazyanalexander/Abyssale-6" target="_blank" class="github-link"></a>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="vertical-align: middle">
+          <path
+            d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.26.82-.58 0-.287-.01-1.05-.015-2.06-3.338.726-4.042-1.61-4.042-1.61-.546-1.39-1.335-1.76-1.335-1.76-1.09-.746.082-.73.082-.73 1.205.085 1.84 1.237 1.84 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.29-1.552 3.297-1.23 3.297-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.824 1.102.824 2.22 0 1.602-.015 2.894-.015 3.287 0 .322.216.698.83.578C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"
+            fill="#F5F5F5" />
+        </svg>
+        <span>GitHub Repository · abyssale-6</span>
         </a>
       </div>
     </div>
@@ -310,7 +338,8 @@
       </div>
       <div class="class-card">
         <h4>⚙️ pkg_utility</h4>
-        <p><strong>Lang (i18n)</strong>, MusicPlayer, GameSaverXML, <strong>SapiTTS (multilingual)</strong> – internationalization, sound, save, speech synthesis.</p>
+        <p><strong>Lang (i18n)</strong>, MusicPlayer, GameSaverXML, <strong>SapiTTS (multilingual)</strong> –
+          internationalization, sound, save, speech synthesis.</p>
       </div>
     </div>
 
@@ -349,10 +378,12 @@
     <h2>📐 ARCHITECTURAL DESIGN (CANVA)</h2>
     <p style="margin-bottom: 0.5rem">Flow diagram, room mapping, and narrative design of the station.</p>
     <div class="canva-embed-wrap">
-      <iframe loading="lazy" src="https://www.canva.com/design/DAHIBh5Yxi8/vHSNxF5e2P49kETm0fSE2A/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
+      <iframe loading="lazy" src="https://www.canva.com/design/DAHIBh5Yxi8/vHSNxF5e2P49kETm0fSE2A/view?embed"
+        allowfullscreen="allowfullscreen" allow="fullscreen"></iframe>
     </div>
     <div class="canva-link-row">
-      <a href="https://www.canva.com/design/DAHIBh5Yxi8/view" target="_blank" style="color: #8bdef0">🔗 Abyssal Station‑6 Architecture (open in Canva) ↗</a>
+      <a href="https://www.canva.com/design/DAHIBh5Yxi8/view" target="_blank" style="color: #8bdef0">🔗 Abyssal
+        Station‑6 Architecture (open in Canva) ↗</a>
     </div>
 
     <!-- YOUTUBE VIDEOS -->
@@ -367,7 +398,9 @@
               referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
           </div>
           <div class="video-description">
-            💡 Dive beneath the ocean and discover the inner workings of Station Abyssal-6, an immersive text-based adventure game that pushes the boundaries of traditional software architecture by integrating AI Generative 100% local.
+            💡 Dive beneath the ocean and discover the inner workings of Station Abyssal-6, an immersive text-based
+            adventure game that pushes the boundaries of traditional software architecture by integrating AI Generative
+            100% local.
           </div>
         </div>
         <div class="video-card">
@@ -402,13 +435,15 @@
         <div class="audio-blog-text">
           <h3>🔊 The Abyss Gears</h3>
           <p>
-            A flash podcast exploring the development behind <strong>Abyssal Station‑6</strong>: software architecture, <strong>multilingual support (i18n)</strong>, LLM integration, SAPI speech synthesis.
+            A flash podcast exploring the development behind <strong>Abyssal Station‑6</strong>: software architecture,
+            <strong>multilingual support (i18n)</strong>, LLM integration, SAPI speech synthesis.
           </p>
           <audio controls class="audio-player">
-            <source src="/~kazazyaa/audio/les_rouages.mp3" type="audio/mpeg" />
+            <source src="/Abyssale-6/audio/les_rouages.mp3" type="audio/mpeg" />
             Your browser does not support the audio element.
           </audio>
-          <p class="small-note" style="margin-top: 1rem">🎧 MP3 – 128 kbps – duration ~21 min. Special multilingual episode.</p>
+          <p class="small-note" style="margin-top: 1rem">🎧 MP3 – 128 kbps – duration ~21 min. Special multilingual
+            episode.</p>
         </div>
         <div class="audio-blog-side">
           <span class="audio-icon">🎙️</span>
@@ -429,7 +464,8 @@
         <div><span class="feature-tag">🧬 Geneticist (Hydroponics)</span><br />First Aid Kit ↔ Red Keycard</div>
       </div>
       <p class="small-note" style="margin-top: 1rem">
-        ✅ Give required item to NPC with <span class="cmd-badge">give &lt;item&gt;</span>. <strong>Trading dialogues are generated by LLM in current language.</strong>
+        ✅ Give required item to NPC with <span class="cmd-badge">give &lt;item&gt;</span>. <strong>Trading dialogues are
+          generated by LLM in current language.</strong>
       </p>
     </div>
 
@@ -440,7 +476,8 @@
         <h3 style="margin-top: 0">⬇️ EXECUTABLE JAR</h3>
         <a href="./jar/game.jar" class="btn-download" download="game.jar">Download Abyssal Station-6 (JAR)</a>
         <p class="small-note">Java 21+ required. Run <span class="cmd-badge">java -jar game.jar</span></p>
-        <p class="small-note" style="margin-top: 0.5rem">🌍 For full multilingual support, install desired Windows language packs.</p>
+        <p class="small-note" style="margin-top: 0.5rem">🌍 For full multilingual support, install desired Windows
+          language packs.</p>
       </div>
       <div class="ack-card">
         <h3 style="margin-top: 0">🙏 ACKNOWLEDGMENTS</h3>
@@ -449,7 +486,8 @@
           for his courses, guidance, and passion for development shared throughout this project.
         </p>
         <p style="margin-top: 1rem">
-          <strong>Technologies used:</strong> Java 21, Python 3.8+, LangChain, LangGraph, FastAPI, LM Studio, SAPI 5 TTS.
+          <strong>Technologies used:</strong> Java 21, Python 3.8+, LangChain, LangGraph, FastAPI, LM Studio, SAPI 5
+          TTS.
         </p>
       </div>
     </div>
@@ -464,7 +502,8 @@
         <span style="font-weight: 700">📄 LICENSE</span><br />Educational project – free for learning purposes
       </div>
       <div style="text-align: right">
-        <span style="font-weight: 700">🏆 CREDITS</span><br />Alexander KAZAZYAN · UI/UX, architecture, AI, save/load XML<br />
+        <span style="font-weight: 700">🏆 CREDITS</span><br />Alexander KAZAZYAN · UI/UX, architecture, AI, save/load
+        XML<br />
         <strong>Multilingual & AI support</strong> : LangGraph, SAPI TTS, i18n
       </div>
     </div>
@@ -475,4 +514,5 @@
   </div>
   <script src="script.js"></script>
 </body>
+
 </html>
